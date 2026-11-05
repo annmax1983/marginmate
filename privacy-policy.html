@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VKT MarginMate — Privacy Policy</title>
+<meta name="description" content="VKT MarginMate privacy policy: no account, no analytics, no page content uploaded. Cost inputs and fee tables stay in local extension storage.">
+<link rel="icon" href="icons/icon128.png">
+<style>
+:root{
+  --accent:#047857;--accent-2:#34d399;--bg:#f5f9fb;--ink:#20304a;--body:#4b5870;--muted:#64718a;--line:#e2e8f2;
+  --tint:color-mix(in srgb, var(--accent) 8%, #ffffff);
+  --shadow-soft:0 8px 24px rgba(32,48,74,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;color:var(--body);background:radial-gradient(900px 420px at 100% -8%, color-mix(in srgb, var(--accent-2) 14%, #ffffff) 0%, rgba(255,255,255,0) 70%), var(--bg);font-family:"Segoe UI Variable Text","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{width:min(920px, calc(100% - 40px));margin:0 auto}
+.topbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.topbar-inner{display:flex;align-items:center;gap:18px;height:70px}
+.brand{display:flex;align-items:center;gap:11px;color:var(--ink);font-size:16px;font-weight:750;letter-spacing:-.015em}
+.brand:hover{text-decoration:none}
+.brand img{width:32px;height:32px;border-radius:9px;background:#fff;border:1px solid var(--line)}
+.top-back{margin-left:auto;font-size:13.5px;font-weight:650;color:var(--muted)}
+.top-back:hover{color:var(--accent);text-decoration:none}
+main{padding:44px 0 20px}
+.doc{padding:38px 42px 44px;border:1px solid var(--line);border-radius:26px;background:#fff;box-shadow:var(--shadow-soft)}
+h1{margin:0 0 6px;color:var(--ink);font-size:clamp(28px,4vw,40px);line-height:1.14;letter-spacing:-.03em;font-weight:800}
+.updated{margin:0 0 26px;color:var(--muted);font-size:12.5px;font-weight:650;letter-spacing:.02em}
+h2{margin:30px 0 8px;color:var(--ink);font-size:16.5px;font-weight:750;letter-spacing:-.01em}
+h2:first-of-type{margin-top:0}
+p{margin:0 0 12px}
+ul{margin:0 0 14px;padding-left:20px}
+li{margin-bottom:6px}
+code{padding:1px 5px;border-radius:5px;background:var(--tint);color:var(--ink);font-size:13px}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 26px}
+.summary div{padding:14px 15px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(160deg,#fff 0%, var(--tint) 100%)}
+.summary b{display:block;margin-bottom:3px;color:var(--ink);font-size:13px;font-weight:750}
+.summary span{color:var(--muted);font-size:12.5px;line-height:1.45}
+.note{margin-top:26px;padding:14px 17px;border:1px solid color-mix(in srgb, var(--accent) 16%, var(--line));border-radius:13px;background:var(--tint);color:var(--body);font-size:13px;line-height:1.65}
+.site-footer{margin-top:40px;border-top:1px solid var(--line);background:rgba(255,255,255,.8);padding:26px 0}
+.footer-inner{display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;justify-content:space-between;font-size:13px;font-weight:600}
+.footer-brand{display:flex;align-items:center;gap:10px;color:var(--ink)}
+.footer-brand img{width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:#fff}
+.footer-links{display:flex;flex-wrap:wrap;gap:9px 18px}
+.footer-links a{color:var(--muted)}
+.footer-links a:hover{color:var(--accent);text-decoration:none}
+@media (max-width:760px){
+  .summary{grid-template-columns:1fr}
+  .doc{padding:26px 20px 30px;border-radius:20px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html"><img src="icons/icon128.png" alt="" width="32" height="32">VKT MarginMate</a>
+    <a class="top-back" href="index.html">← Back to overview</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <article class="doc">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: 5 November 2026</p>
+
+    <div class="summary">
+      <div><b>No account</b><span>There is nothing to sign up for.</span></div>
+      <div><b>No analytics</b><span>No telemetry, no tracking pixels.</span></div>
+      <div><b>No uploads</b><span>Page content never leaves the browser.</span></div>
+    </div>
+
+    <h2>What VKT MarginMate stores</h2>
+    <p>Everything you type — unit cost, freight, duty, ad percentage, return rate, target margin — is written to your browser's extension storage (<code>chrome.storage.local</code>), together with the products you save. This data stays on your device. It is not synchronised, not transmitted, and is removed when you uninstall the extension or clear it from the popup.</p>
+
+    <h2>What VKT MarginMate reads</h2>
+    <p>On Amazon product pages the extension reads the price, ASIN, title, breadcrumb category, product dimensions and item weight, because these are the inputs of the fee calculation. On search-result pages it reads the price and ASIN of each result card to draw the margin badges. Page content is processed in memory, never recorded, never logged, never uploaded.</p>
+
+    <h2>Network requests</h2>
+    <ul>
+      <li><strong>Fee-table refresh</strong> — one daily GET to <code>annmax1983.com/static/marginmate/fees.json</code>, a static JSON file. No identifiers, no query parameters.</li>
+      <li><strong>Licence validation</strong> — only when you activate a Pro key. The request carries the licence key, a random per-install identifier, the plugin ID and basic browser metadata (browser name and version, language, timezone, user agent) to <code>api.annmax1983.com</code>. It is used to bind the licence to a device and to check it is still valid.</li>
+    </ul>
+
+    <h2>What VKT MarginMate does not do</h2>
+    <ul>
+      <li>No analytics, telemetry, advertising or tracking pixels.</li>
+      <li>No collection of names, email addresses, payments or Seller Central credentials.</li>
+      <li>No upload of page content, screenshots or browsing history.</li>
+      <li>No sale or sharing of data with third parties.</li>
+    </ul>
+
+    <h2>Permissions</h2>
+    <ul>
+      <li><code>storage</code> — keep your cost inputs and saved products locally.</li>
+      <li><code>alarms</code> — schedule the daily fee-table refresh.</li>
+      <li>Amazon host access — draw the panel and the margin badges on pages you open.</li>
+    </ul>
+
+    <h2>Removing your data</h2>
+    <p>Uninstalling the extension deletes all locally stored data. Saved products and defaults can also be cleared at any time from the popup (<em>Clear saved products</em>). Deactivating a licence in the popup releases the device slot on the server.</p>
+
+    <h2>Contact</h2>
+    <p>support@annmax1983.com</p>
+
+    <p class="note">VKT MarginMate is not affiliated with, endorsed by, or sponsored by Amazon.com, Inc. “Amazon” and “FBA” are trademarks of Amazon.com, Inc. or its affiliates. Fee figures are estimates computed from Amazon's publicly published fee schedules.</p>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand"><img src="icons/icon128.png" alt="" width="26" height="26">VKT MarginMate · © 2026</div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="index.html">Overview</a>
+      <a href="https://annmax1983.com/extensions.html" target="_blank" rel="noopener">More extensions</a>
+      <a href="https://github.com/annmax1983/MarginMate" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.annmax1983.com/extensions/marginmate" target="_blank" rel="noopener">Website</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

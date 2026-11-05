@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>VKT MarginMate — screenshot 2</title>
+<link rel="stylesheet" href="../content.css">
+<link rel="stylesheet" href="shot.css">
+<style>
+  .main { grid-template-columns: 470px 1fr; gap: 26px; }
+  h1 { font-size: 44px; }
+  .breakdown { display: flex; align-items: center; gap: 22px; }
+  .callouts { display: grid; gap: 10px; width: 200px; }
+  .co {
+    position: relative;
+    padding: 9px 12px;
+    border: 1px solid #dbe6f1;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .94);
+    box-shadow: 0 8px 20px rgba(32, 48, 74, .07);
+  }
+  .co::before {
+    content: "";
+    position: absolute;
+    left: -6px;
+    top: 15px;
+    width: 9px; height: 9px;
+    background: #fff;
+    border-left: 1px solid #dbe6f1;
+    border-bottom: 1px solid #dbe6f1;
+    transform: rotate(45deg);
+  }
+  .co b { display: block; color: #14243c; font-size: 12.5px; font-weight: 700; }
+  .co span { color: #64718a; font-size: 11px; line-height: 1.35; }
+  .co i { color: #047857; font-style: normal; font-weight: 700; }
+  .panel-wrap.tight { transform: none; width: 300px; }
+</style>
+</head>
+<body>
+<div class="shot">
+  <div class="head">
+    <img src="../icons/icon128.png" alt="">
+    <span class="name">VKT MarginMate</span>
+    <span class="tag">Chrome</span>
+    <span class="spacer"></span>
+    <span class="tag">Every fee, itemised</span>
+  </div>
+
+  <div class="main">
+    <div>
+      <h1>Every Amazon fee,<br><em>line by line.</em></h1>
+      <p class="sub">No black box. Each line shows the rate or size tier that produced it, so you can see exactly where the money went.</p>
+      <ul class="bullets">
+        <li><span class="tick">✓</span><span><b>Referral</b> by category, with the low-price rate applied automatically</span></li>
+        <li><span class="tick">✓</span><span><b>FBA fulfilment</b> by size tier and shipping weight, apparel surcharge included</span></li>
+        <li><span class="tick">✓</span><span><b>Storage</b> from real cubic feet, peak-season rate in Oct–Dec</span></li>
+        <li><span class="tick">✓</span><span><b>Ads, returns, landed cost</b> — your own percentages, saved per ASIN</span></li>
+      </ul>
+      <p class="sub" style="font-size:13.5px;color:#64718a;margin-top:16px;">Every input is editable and recalculates while you type.</p>
+    </div>
+
+    <div class="stage">
+      <div class="breakdown">
+        <div class="panel-wrap tight" data-panel></div>
+        <div class="callouts">
+          <div class="co"><b>Referral <i>15.0%</i></b><span>Home &amp; Kitchen category rate</span></div>
+          <div class="co"><b>FBA <i>Large standard</i></b><span>8 × 6 × 4 in · 1 lb → $4.55</span></div>
+          <div class="co"><b>Storage <i>0.111 ft³</i></b><span>Monthly rate, peak pricing in Q4</span></div>
+          <div class="co"><b>Ads &amp; returns <i>15% / 5%</i></b><span>Your assumptions, kept per product</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>annmax1983.com/extensions/marginmate</span><span>·</span><span>Rates from Amazon's public fee schedule · v2026.11</span></div>
+</div>
+<script src="shot.js"></script>
+</body>
+</html>
