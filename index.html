@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VKT MarginMate — Amazon FBA profit calculator</title>
-<meta name="description" content="VKT MarginMate shows the real profit of any Amazon product: referral fee, FBA fulfilment, storage, ads, returns and landed cost, plus break-even and target price. Chrome extension, local only.">
+<meta name="description" content="VKT MarginMate shows the real profit of any Amazon product: referral fee, FBA fulfilment, storage, ads, returns and landed cost, plus break-even and target price. Chrome and Edge extension, local only.">
 <link rel="icon" href="icons/icon128.png">
 <style>
 :root{
@@ -16,18 +16,30 @@
   --body:#4b5870;
   --muted:#64718a;
   --line:#e2e8f2;
+  --tint:#eef3fb;
   --tint:color-mix(in srgb, var(--accent) 8%, #ffffff);
+  --tint-strong:#e5edfa;
   --tint-strong:color-mix(in srgb, var(--accent) 14%, #ffffff);
   --shadow:0 18px 45px rgba(32,48,74,.10);
   --shadow-soft:0 8px 24px rgba(32,48,74,.06);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:96px}
-body{margin:0;color:var(--body);background:radial-gradient(900px 420px at 100% -8%, color-mix(in srgb, var(--accent-2) 14%, #ffffff) 0%, rgba(255,255,255,0) 70%), var(--bg);font-family:"Segoe UI Variable Text","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{
+  margin:0;
+  color:var(--body);
+  background:radial-gradient(900px 420px at 100% -8%, color-mix(in srgb, var(--accent-2) 12%, #ffffff) 0%, rgba(255,255,255,0) 70%), var(--bg);
+  font-family:"Segoe UI Variable Text","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
 img{display:block;max-width:100%}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 button,select{font:inherit}
+[hidden]{display:none !important}
 ::selection{background:color-mix(in srgb, var(--accent) 22%, #ffffff);color:var(--ink)}
 :focus-visible{outline:2px solid color-mix(in srgb, var(--accent) 55%, #ffffff);outline-offset:3px}
 .wrap{width:min(1120px, calc(100% - 40px));margin:0 auto}
@@ -43,21 +55,61 @@ button,select{font:inherit}
 .nav-links + .top-actions{margin-left:0}
 .icon-btn{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--muted)}
 .icon-btn:hover{color:var(--accent);border-color:color-mix(in srgb, var(--accent) 26%, var(--line));text-decoration:none}
-.lang{appearance:none;-webkit-appearance:none;border:1px solid var(--line);background-color:#fff;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364718a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:12px;color:var(--ink);border-radius:10px;padding:9px 32px 9px 11px;font-size:13px;font-weight:600;cursor:pointer;max-width:150px}
+.lang{
+  appearance:none;-webkit-appearance:none;
+  border:1px solid var(--line);
+  background-color:#fff;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364718a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  background-size:12px;
+  color:var(--ink);
+  border-radius:10px;
+  padding:9px 32px 9px 11px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  max-width:150px;
+}
 .lang:hover{border-color:color-mix(in srgb, var(--accent) 26%, var(--line))}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:0 20px;border-radius:12px;border:1px solid transparent;font-weight:700;font-size:14.5px;line-height:1.2;transition:transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease}
 .btn:hover{text-decoration:none;transform:translateY(-1px)}
-.btn-primary{background:var(--accent);color:#fff;box-shadow:0 12px 26px color-mix(in srgb, var(--accent) 30%, rgba(0,0,0,0))}
-.btn-primary:hover{background:color-mix(in srgb, var(--accent) 88%, #000)}
-.btn-secondary{background:#fff;border-color:var(--line);color:var(--ink)}
-.btn-secondary:hover{border-color:color-mix(in srgb, var(--accent) 30%, var(--line))}
-.btn-quiet{background:transparent;color:var(--muted);min-height:48px;padding:0 12px}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 12px 26px color-mix(in srgb, var(--accent) 26%, transparent)}
+.btn-primary:hover{background:color-mix(in srgb, var(--accent) 90%, var(--ink));box-shadow:0 15px 30px color-mix(in srgb, var(--accent) 30%, transparent)}
+.btn-secondary{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-secondary:hover{border-color:color-mix(in srgb, var(--accent) 28%, var(--line))}
+.btn-quiet{background:transparent;color:var(--muted);padding:0 8px}
 .btn-quiet:hover{color:var(--accent)}
+.site-footer{margin-top:48px;border-top:1px solid var(--line);background:rgba(255,255,255,.8);padding:32px 0}
+.footer-inner{display:flex;flex-wrap:wrap;gap:20px 32px;align-items:center;justify-content:space-between}
+.footer-brand{display:flex;align-items:center;gap:11px;color:var(--ink);font-size:14px;font-weight:700}
+.footer-brand img{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.footer-brand .copy{display:block;color:var(--muted);font-size:12px;font-weight:500;line-height:1.4;margin-top:1px}
+.footer-links{display:flex;flex-wrap:wrap;gap:9px 18px;align-items:center;font-size:13px;font-weight:600}
+.footer-links a{color:var(--muted)}
+.footer-links a:hover{color:var(--accent);text-decoration:none}
+@media (max-width:900px){
+  .nav-links{display:none}
+  .topbar-inner{height:62px}
+  .wrap{width:calc(100% - 32px)}
+}
+@media (max-width:560px){
+  .brand span{display:none}
+  .lang{max-width:124px}
+  .site-footer{padding:26px 0}
+  .footer-inner{align-items:flex-start;flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none !important;animation:none !important}
+}
+
 .hero{position:relative;overflow:hidden;padding:66px 0 44px}
-.hero::before{content:"";position:absolute;right:-160px;top:-220px;width:780px;height:780px;border-radius:50%;background:radial-gradient(circle, color-mix(in srgb, var(--accent-2) 22%, rgba(255,255,255,0)) 0%, rgba(255,255,255,0) 68%);pointer-events:none}
+.hero::before{content:"";position:absolute;right:-160px;top:-220px;width:780px;height:780px;border-radius:50%;background:radial-gradient(circle, color-mix(in srgb, var(--accent-2) 20%, rgba(255,255,255,0)) 0%, rgba(255,255,255,0) 68%);pointer-events:none}
 .hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.18fr) minmax(300px,.82fr);gap:54px;align-items:center}
+.hero-copy{min-width:0}
 .eyebrow{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;border:1px solid color-mix(in srgb, var(--accent) 22%, var(--line));background:color-mix(in srgb, var(--accent) 7%, #ffffff);color:var(--accent);font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-.hero h1{margin:16px 0 14px;color:var(--ink);font-size:clamp(34px,4.6vw,54px);line-height:1.05;letter-spacing:-.04em;font-weight:800;overflow-wrap:anywhere}
+.hero h1{margin:16px 0 14px;color:var(--ink);font-size:clamp(36px,4.9vw,58px);line-height:1.04;letter-spacing:-.04em;font-weight:800;overflow-wrap:anywhere}
 .tagline{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 20px}
 .tagline span{padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.8);color:var(--muted);font-size:12.5px;font-weight:650}
 .lead{max-width:680px;margin:0 0 22px;color:var(--body);font-size:17px;line-height:1.72}
@@ -67,7 +119,7 @@ button,select{font:inherit}
 .cta-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .micro{margin:16px 0 0;color:var(--muted);font-size:12.5px;font-weight:550}
 .app-card{position:relative;overflow:hidden;padding:32px 28px 24px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(160deg,#ffffff 0%, color-mix(in srgb, var(--accent) 7%, #ffffff) 100%);box-shadow:var(--shadow);text-align:center}
-.app-card-glow{position:absolute;width:220px;height:220px;left:50%;top:-120px;transform:translateX(-50%);border-radius:50%;background:color-mix(in srgb, var(--accent-2) 22%, rgba(255,255,255,0));filter:blur(8px)}
+.app-card-glow{position:absolute;width:220px;height:220px;left:50%;top:-120px;transform:translateX(-50%);border-radius:50%;background:color-mix(in srgb, var(--accent-2) 20%, rgba(255,255,255,0));filter:blur(8px)}
 .app-icon{position:relative;width:108px;height:108px;margin:6px auto 18px;padding:11px;border-radius:26px;background:#fff;border:1px solid var(--line);box-shadow:0 16px 30px rgba(32,48,74,.14)}
 .app-icon img{width:100%;height:100%;object-fit:contain;border-radius:18px}
 .app-name{position:relative;color:var(--ink);font-size:23px;font-weight:800;letter-spacing:-.02em}
@@ -76,6 +128,7 @@ button,select{font:inherit}
 .app-points div{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.72);color:var(--body);font-size:13px;line-height:1.45}
 .app-points svg{flex:none;margin-top:2px;color:var(--accent)}
 .app-footer{position:relative;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;font-weight:650}
+.app-footer svg{color:var(--accent)}
 .block{padding:56px 0}
 .section-head{max-width:720px;margin:0 0 26px}
 .kicker{margin:0 0 9px;color:var(--accent);font-size:11.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
@@ -84,9 +137,8 @@ button,select{font:inherit}
 .feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
 .feature{padding:21px 21px 23px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow-soft);transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease}
 .feature:hover{transform:translateY(-2px);border-color:color-mix(in srgb, var(--accent) 22%, var(--line));box-shadow:0 14px 32px rgba(32,48,74,.09)}
-.feature h3{margin:0 0 7px;color:var(--ink);font-size:15px;font-weight:750;letter-spacing:-.01em}
-.feature p{margin:0;color:var(--body);font-size:14px;line-height:1.66}
 .feature .num{display:inline-flex;align-items:center;justify-content:center;width:33px;height:33px;margin-bottom:13px;border-radius:10px;background:var(--tint);color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.04em}
+.feature p{margin:0;color:var(--body);font-size:14px;line-height:1.66}
 .more-panel{margin-top:15px;padding:22px 24px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow-soft)}
 .more-panel h3{margin:0 0 13px;color:var(--ink);font-size:13.5px;font-weight:750}
 .more-list{display:grid;grid-template-columns:1fr 1fr;gap:9px 28px;margin:0;padding:0;list-style:none}
@@ -101,7 +153,6 @@ button,select{font:inherit}
 .plan-mark.free{background:var(--tint);color:var(--accent)}
 .plan-mark.premium{background:var(--accent);color:#fff}
 .plan p{margin:0;color:var(--body);font-size:14.5px;line-height:1.72}
-.plan .btn{margin-top:18px;width:100%}
 .plan-note{margin-top:15px;padding:14px 17px;border:1px solid color-mix(in srgb, var(--accent) 16%, var(--line));border-radius:13px;background:var(--tint);color:var(--body);font-size:13px;line-height:1.65}
 .privacy-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);gap:34px;align-items:center;padding:42px 44px;border:1px solid color-mix(in srgb, var(--accent) 16%, var(--line));border-radius:28px;background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, #ffffff) 0%, #ffffff 62%, color-mix(in srgb, var(--accent-2) 12%, #ffffff) 100%);box-shadow:var(--shadow)}
 .panel-icon{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;margin-bottom:15px;border-radius:14px;background:#fff;border:1px solid var(--line);color:var(--accent);box-shadow:var(--shadow-soft)}
@@ -120,20 +171,15 @@ button,select{font:inherit}
 .lock-badge{position:relative;display:grid;place-items:center;width:88px;height:88px;border-radius:26px;background:#fff;border:1px solid var(--line);color:var(--accent);box-shadow:var(--shadow)}
 .lock-badge svg{width:36px;height:36px}
 .support-card{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr);gap:34px;align-items:center;padding:40px 44px;border:1px solid var(--line);border-radius:28px;background:#fff;box-shadow:var(--shadow-soft)}
+.support-copy .kicker{margin-bottom:10px}
 .support-copy p{max-width:640px;margin:0 0 12px;color:var(--body);font-size:14.5px;line-height:1.75}
-.disclaimer{margin:14px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
+.support-copy p:last-of-type{margin-bottom:16px}
+.disclaimer{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
 .kofi{display:flex;flex-direction:column;align-items:center;gap:12px;padding:26px 22px;border:1px solid color-mix(in srgb, var(--accent) 16%, var(--line));border-radius:20px;background:linear-gradient(160deg, color-mix(in srgb, var(--accent) 7%, #ffffff) 0%, #ffffff 100%);text-align:center}
 .kofi-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#fff;border:1px solid var(--line);color:var(--accent);box-shadow:var(--shadow-soft)}
 .kofi p{margin:0;color:var(--body);font-size:13px;line-height:1.6}
+.kofi-btn{width:100%}
 .kofi-note{margin:0;color:var(--muted);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-.site-footer{margin-top:48px;border-top:1px solid var(--line);background:rgba(255,255,255,.8);padding:32px 0}
-.footer-inner{display:flex;flex-wrap:wrap;gap:20px 32px;align-items:center;justify-content:space-between}
-.footer-brand{display:flex;align-items:center;gap:11px;color:var(--ink);font-size:14px;font-weight:700}
-.footer-brand img{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:#fff}
-.footer-brand .copy{display:block;color:var(--muted);font-size:12px;font-weight:500;line-height:1.4;margin-top:1px}
-.footer-links{display:flex;flex-wrap:wrap;gap:9px 18px;align-items:center;font-size:13px;font-weight:600}
-.footer-links a{color:var(--muted)}
-.footer-links a:hover{color:var(--accent);text-decoration:none}
 @media (max-width:1024px){
   .hero-grid{grid-template-columns:1fr;gap:38px}
   .app-card{max-width:460px;margin:0 auto;width:100%}
@@ -142,9 +188,8 @@ button,select{font:inherit}
   .privacy-visual{min-height:210px}
 }
 @media (max-width:760px){
-  .nav-links{display:none}
   .hero{padding:44px 0 30px}
-  .hero h1{font-size:clamp(31px,8.4vw,42px)}
+  .hero h1{font-size:clamp(33px,9vw,46px)}
   .lead{font-size:16px}
   .block{padding:42px 0}
   .feature-grid{grid-template-columns:1fr}
@@ -153,14 +198,6 @@ button,select{font:inherit}
   .privacy-panel,.support-card{padding:28px 22px;border-radius:22px}
   .privacy-visual{display:none}
   .cta-row .btn{flex:1 1 auto}
-  .brand span{display:none}
-  .lang{max-width:124px}
-  .site-footer{padding:26px 0}
-  .footer-inner{align-items:flex-start;flex-direction:column}
-}
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{transition:none !important;animation:none !important}
 }
 </style>
 </head>
@@ -169,61 +206,40 @@ button,select{font:inherit}
   <div class="wrap topbar-inner">
     <a class="brand" href="index.html"><img src="icons/icon128.png" alt="" width="32" height="32"><span>VKT MarginMate</span></a>
     <nav class="nav-links" aria-label="Main">
-      <a href="#features" data-i18n="nav.features">Features</a>
-      <a href="#plans" data-i18n="nav.plans">Free &amp; Pro</a>
-      <a href="#privacy" data-i18n="nav.privacy">Privacy</a>
-      <a href="#support" data-i18n="nav.support">Support</a>
+      <a href="#features" id="i-nav-features">Features</a>
+      <a href="#plans" id="i-nav-plans">Free &amp; Pro</a>
+      <a href="#privacy" id="i-nav-privacy">Privacy</a>
+      <a href="#support" id="i-nav-support">Support</a>
     </nav>
     <div class="top-actions">
-      <select class="lang" id="lang" aria-label="Language">
-        <option value="en">English</option>
-        <option value="zh">简体中文</option>
-        <option value="ja">日本語</option>
-        <option value="de">Deutsch</option>
-        <option value="es">Español</option>
-        <option value="fr">Français</option>
-      </select>
+      <select class="lang" id="i-lang" aria-label="Language"><option value="en">English</option><option value="zh">简体中文</option><option value="ja">日本語</option><option value="de">Deutsch</option><option value="es">Español</option><option value="fr">Français</option></select>
       <a class="icon-btn" href="https://github.com/annmax1983/MarginMate" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.05-.01-1.9-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.4 9.4 0 0 1 12 5.96c.85 0 1.71.12 2.51.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg></a>
     </div>
   </div>
 </header>
-
 <main>
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <span class="eyebrow" data-i18n="hero.eyebrow">Chrome extension</span>
-        <h1 data-i18n="hero.h1">Know the profit before you price it.</h1>
-        <div class="tagline">
-          <span data-i18n="hero.tag1">Fee breakdown</span>
-          <span data-i18n="hero.tag2">Break-even price</span>
-          <span data-i18n="hero.tag3">Search-page margins</span>
-        </div>
-        <p class="lead" data-i18n="hero.lead">VKT MarginMate sits on any Amazon product page and shows the money line by line: referral fee, FBA fulfilment, storage, ads, returns and landed cost. You get net profit, margin, ROI and the price you actually need to charge.</p>
-        <div class="badges">
-          <span class="badge"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg><span data-i18n="hero.badge1">Runs locally</span></span>
-          <span class="badge"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 9 4.5 9 7a11.7 11.7 0 0 1-2.3 3.6"/><path d="M6.2 6.2C4.2 7.7 3 9.7 3 12c0 2.5 4 7 9 7a11 11 0 0 0 4.2-.8"/></svg><span data-i18n="hero.badge2">No account</span></span>
-          <span class="badge"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>Chrome</span>
-        </div>
+        <span class="eyebrow" id="i-eyebrow">Chrome &amp; Edge extension</span>
+        <h1 id="i-h1">Know the profit before you price it.</h1>
+        <div class="tagline" id="i-tagline"><span>Fee breakdown</span><span>Break-even price</span><span>Search-page margins</span></div>
+        <p class="lead" id="i-intro">VKT MarginMate sits on any Amazon product page and shows the money line by line: referral fee, FBA fulfilment, storage, ads, returns and landed cost. You get net profit, margin, ROI and the price you actually need to charge.</p>
+        <div class="badges" id="i-badges"><span class="badge"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg>Runs locally</span><span class="badge"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 9 4.5 9 7a11.7 11.7 0 0 1-2.3 3.6"/><path d="M6.2 6.2C4.2 7.7 3 9.7 3 12c0 2.5 4 7 9 7a11 11 0 0 0 4.2-.8"/></svg>No account</span><span class="badge"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>Chrome &amp; Edge</span></div>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://annmax1983.com/checkout?plugin=marginmate" target="_blank" rel="noopener"><span data-i18n="hero.cta1">Get Pro — $19.99</span><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="btn btn-secondary" href="privacy-policy.html" data-i18n="hero.cta2">Privacy policy</a>
-          <a class="btn btn-quiet" href="https://github.com/annmax1983/MarginMate" target="_blank" rel="noopener" data-i18n="hero.cta3">View source</a>
+          <a class="btn btn-primary" href="https://annmax1983.com/checkout?plugin=marginmate" target="_blank" rel="noopener"><span id="i-get-label">Get Pro — $19.99</span><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-secondary" href="privacy-policy.html"><span id="i-privacy-label">Privacy policy</span></a>
+          <a class="btn btn-quiet" href="https://github.com/annmax1983/MarginMate" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.05-.01-1.9-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.4 9.4 0 0 1 12 5.96c.85 0 1.71.12 2.51.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg><span id="i-source-label">View source</span></a>
         </div>
-        <p class="micro" data-i18n="hero.micro">Free + Pro · Chrome · No account required</p>
+        <p class="micro" id="i-micro">Free + Pro · Chrome &amp; Edge</p>
       </div>
-
       <aside class="app-card" aria-label="VKT MarginMate">
         <div class="app-card-glow" aria-hidden="true"></div>
         <div class="app-icon"><img src="icons/icon128.png" alt="VKT MarginMate icon" width="108" height="108"></div>
-        <div class="app-name">VKT MarginMate</div>
-        <div class="app-sub" data-i18n="app.sub">Free + Pro</div>
-        <div class="app-points">
-          <div><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="app.p1">Amazon fee tables built in</span></div>
-          <div><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="app.p2">Every number editable</span></div>
-          <div><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="app.p3">Nothing leaves the browser</span></div>
-        </div>
-        <div class="app-footer"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg><span>Chrome · Manifest V3</span></div>
+        <div class="app-name" id="i-app-name">VKT MarginMate</div>
+        <div class="app-sub" id="i-app-sub">Free + Pro</div>
+        <div class="app-points" id="i-app-points"><div><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>No page content collected</span></div><div><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>No analytics</span></div><div><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Works offline</span></div></div>
+        <div class="app-footer"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg><span id="i-app-browsers">Chrome &amp; Edge</span></div>
       </aside>
     </div>
   </section>
@@ -231,26 +247,24 @@ button,select{font:inherit}
   <section class="block" id="features">
     <div class="wrap">
       <div class="section-head">
-        <p class="kicker" data-i18n="feat.kicker">What it does</p>
-        <h2 data-i18n="feat.title">The numbers that decide a product</h2>
-        <p data-i18n="feat.sub">Everything is read from the page you are already looking at, then written as one sentence: this product makes money, or it does not.</p>
+        <p class="kicker">01</p>
+        <h2 id="i-feat-title">The numbers that decide a product</h2>
+        <p id="i-feat-lead">Everything is read from the page you are already looking at, then written as one sentence: this product makes money, or it does not.</p>
       </div>
-      <div class="feature-grid">
-        <article class="feature"><div class="num">01</div><h3 data-i18n="f1.t">Fee breakdown</h3><p data-i18n="f1.d">Referral fee by category, FBA fulfilment by size tier, storage, inbound placement, ads and returns — each on its own line, with the rate shown.</p></article>
-        <article class="feature"><div class="num">02</div><h3 data-i18n="f2.t">Break-even price</h3><p data-i18n="f2.d">The exact price where profit reaches zero, so you know how far a discount can go before it costs you money.</p></article>
-        <article class="feature"><div class="num">03</div><h3 data-i18n="f3.t">Target price</h3><p data-i18n="f3.d">Set a margin and get the price to charge for this product, recalculated while you edit cost and freight.</p></article>
-        <article class="feature"><div class="num">04</div><h3 data-i18n="f4.t">Search-page margins</h3><p data-i18n="f4.d">A profit badge on every result card and a sort by margin, so an entire niche can be scanned in seconds.</p></article>
-        <article class="feature"><div class="num">05</div><h3 data-i18n="f5.t">CSV export</h3><p data-i18n="f5.d">Export a search page or your saved products with the full breakdown — ready for Excel, no copy-paste.</p></article>
-        <article class="feature"><div class="num">06</div><h3 data-i18n="f6.t">16 marketplaces</h3><p data-i18n="f6.d">Fee tables and VAT handling per storefront. US ships a tiered FBA table; UK and DE cover referral rates and VAT, with the FBA fee entered manually; other storefronts fall back to the US table.</p></article>
+      <div class="feature-grid" id="i-features">
+<article class="feature"><span class="num">01</span><p>Fee breakdown: Referral fee by category, FBA fulfilment by size tier, storage, inbound placement, ads and returns — each on its own line, with the rate shown.</p></article>
+<article class="feature"><span class="num">02</span><p>Break-even price: The exact price where profit reaches zero, so you know how far a discount can go before it costs you money.</p></article>
+<article class="feature"><span class="num">03</span><p>Target price: Set a margin and get the price to charge for this product, recalculated while you edit cost and freight.</p></article>
+<article class="feature"><span class="num">04</span><p>Search-page margins: A profit badge on every result card and a sort by margin, so an entire niche can be scanned in seconds.</p></article>
+<article class="feature"><span class="num">05</span><p>CSV export: Export a search page or your saved products with the full breakdown — ready for Excel, no copy-paste.</p></article>
+<article class="feature"><span class="num">06</span><p>16 marketplaces: Fee tables and VAT handling per storefront. US ships a tiered FBA table; UK and DE cover referral rates and VAT, with the FBA fee entered manually; other storefronts fall back to the US table.</p></article>
       </div>
-      <div class="more-panel">
-        <h3 data-i18n="more.title">Where the numbers come from</h3>
-        <ul class="more-list">
-          <li data-i18n="more.1">Rates transcribed from Amazon's public fee schedules, versioned in one file</li>
-          <li data-i18n="more.2">Tables refresh from a static JSON file, so rate changes need no store review</li>
-          <li data-i18n="more.3">Every line shows the rate or size tier that produced it</li>
-          <li data-i18n="more.4">Estimates, not promises — Amazon exceptions are yours to confirm</li>
-        </ul>
+      <div class="more-panel" id="i-more-panel">
+        <h3 id="i-more-title">Where the numbers come from</h3>
+        <ul class="more-list" id="i-more"><li>Rates transcribed from Amazon's public fee schedules, versioned in one file</li>
+<li>Tables refresh from a static JSON file, so rate changes need no store review</li>
+<li>Every line shows the rate or size tier that produced it</li>
+<li>Estimates, not promises — Amazon exceptions are yours to confirm</li></ul>
       </div>
     </div>
   </section>
@@ -258,22 +272,15 @@ button,select{font:inherit}
   <section class="block" id="plans">
     <div class="wrap">
       <div class="section-head">
-        <p class="kicker" data-i18n="plan.kicker">Pricing</p>
-        <h2 data-i18n="plan.title">Free, or one payment</h2>
-        <p data-i18n="plan.sub">The panel is free forever. Pro removes the limits and adds the batch view.</p>
+        <p class="kicker">02</p>
+        <h2 id="i-plan-title">Free, or one payment</h2>
+        <p id="i-plan-lead">The panel is free forever. Pro removes the limits and adds the batch view.</p>
       </div>
-      <div class="plans">
-        <article class="plan">
-          <div class="plan-top"><span class="plan-mark free">✓</span><h3 data-i18n="free.title">Free</h3></div>
-          <p data-i18n="free.d">Profit panel on every product page, break-even and target price, all 16 marketplaces, 3 saved products.</p>
-        </article>
-        <article class="plan premium">
-          <div class="plan-top"><span class="plan-mark premium">★</span><h3 data-i18n="pro.title">Pro · $19.99 once</h3></div>
-          <p data-i18n="pro.d">Unlimited saved products, profit badges on every search result, sort by margin, CSV export. Two devices per licence.</p>
-          <a class="btn btn-primary" href="https://annmax1983.com/checkout?plugin=marginmate" target="_blank" rel="noopener" data-i18n="plan.buy">Buy a licence</a>
-        </article>
+      <div class="plans" id="i-plans">
+        <article class="plan"><div class="plan-top"><span class="plan-mark free"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><h3>Free</h3></div><p>Profit panel on every product page, break-even and target price, all 16 marketplaces, 3 saved products.</p></article>
+        <article class="plan premium"><div class="plan-top"><span class="plan-mark premium"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><h3>Pro · $19.99 once</h3></div><p>Unlimited saved products, profit badges on every search result, sort by margin, CSV export. Two devices per licence.</p></article>
       </div>
-      <p class="plan-note" data-i18n="plan.note">No subscription and no trial: one payment, licence validated once and cached, so the extension keeps working offline.</p>
+      <div class="plan-note" id="i-plan-note">No subscription and no trial: one payment, licence validated once and cached, so the extension keeps working offline.</div>
     </div>
   </section>
 
@@ -281,20 +288,15 @@ button,select{font:inherit}
     <div class="wrap">
       <div class="privacy-panel">
         <div>
-          <span class="panel-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
-          <p class="kicker" data-i18n="priv.kicker">Privacy</p>
-          <h2 data-i18n="priv.title">No account, no upload</h2>
-          <p class="panel-lead" data-i18n="priv.lead">Fee tables, your cost inputs and saved products live in local extension storage. The only network calls are a daily fee-table refresh and, if you activate Pro, a licence check.</p>
-          <div class="points">
-            <span class="point"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="priv.p1">No page content collected</span></span>
-            <span class="point"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="priv.p2">No analytics</span></span>
-            <span class="point"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="priv.p3">Works offline</span></span>
-          </div>
-          <a class="text-link" href="privacy-policy.html"><span data-i18n="priv.link">Read the privacy policy</span> →</a>
+          <span class="panel-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 15v2"/></svg></span>
+          <h2 id="i-priv-title">No account, no upload</h2>
+          <p class="panel-lead" id="i-priv-lead">Fee tables, your cost inputs and saved products live in local extension storage. The only network calls are a daily fee-table refresh and, if you activate Pro, a licence check.</p>
+          <div class="points" id="i-priv-points"><span class="point"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>No page content collected</span><span class="point"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>No analytics</span><span class="point"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Works offline</span></div>
+          <a class="text-link" href="privacy-policy.html"><span id="i-priv-cta">Read the privacy policy</span><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
         <div class="privacy-visual" aria-hidden="true">
           <span class="ring one"></span><span class="ring two"></span><span class="ring three"></span>
-          <span class="lock-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+          <span class="lock-badge"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 15v2"/></svg></span>
         </div>
       </div>
     </div>
@@ -304,297 +306,245 @@ button,select{font:inherit}
     <div class="wrap">
       <div class="support-card">
         <div class="support-copy">
-          <p class="kicker" data-i18n="sup.kicker">Support</p>
-          <h2 data-i18n="sup.title">Made by one developer</h2>
-          <p data-i18n="sup.p1">VKT MarginMate is built and maintained by a single person. If it saved you a spreadsheet, a coffee goes a long way.</p>
-          <p data-i18n="sup.p2">Found a number that looks wrong? Send the ASIN — Amazon changes fees several times a year, and these reports are how the tables stay current.</p>
-          <p class="disclaimer" data-i18n="sup.note">Estimates only. VKT MarginMate is not affiliated with Amazon.</p>
+          <p class="kicker" id="i-support-eyebrow">Support</p>
+          <h2 id="i-support-title">Made by one developer</h2>
+          <div id="i-support-copy"><p>VKT MarginMate is built and maintained by a single person. If it saved you a spreadsheet, a coffee goes a long way.</p><p>Found a number that looks wrong? Send the ASIN — Amazon changes fees several times a year, and these reports are how the tables stay current.</p></div>
+          <p class="disclaimer" id="i-support-disclaimer">Estimates only. VKT MarginMate is not affiliated with Amazon.</p>
         </div>
         <div class="kofi">
-          <span class="kofi-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z"/><path d="M16 9h2a2 2 0 0 1 0 4h-2"/><path d="M4 21h12"/></svg></span>
-          <p data-i18n="sup.kofiText">A small thank you keeps the fee tables updated.</p>
-          <a class="btn btn-secondary kofi-btn" href="https://ko-fi.com/annmax?ref=marginmate" target="_blank" rel="noopener" data-i18n="sup.kofi">Buy me a coffee</a>
-          <p class="kofi-note" data-i18n="sup.noAccount">No account needed</p>
+          <div class="kofi-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z"/><path d="M16 10h2a3 3 0 0 1 0 6h-2"/><path d="M7 4v2M11 4v2"/></svg></div>
+          <p id="i-support-hint">A small thank you keeps the fee tables updated.</p>
+          <a class="btn btn-primary kofi-btn" href="https://ko-fi.com/annmax?ref=marginmate" target="_blank" rel="noopener"><span id="i-support-btn-label">Buy me a coffee</span></a>
+          <p class="kofi-note">Ko-fi</p>
         </div>
       </div>
     </div>
   </section>
 </main>
-
 <footer class="site-footer">
   <div class="wrap footer-inner">
     <div class="footer-brand">
       <img src="icons/icon128.png" alt="" width="30" height="30">
-      <div>VKT MarginMate<span class="copy" id="foot-copy">© 2026 VKT</span></div>
+      <div>VKT MarginMate<span class="copy" id="i-footer-copy">© 2026 VKT MarginMate</span></div>
     </div>
     <nav class="footer-links" aria-label="Footer">
-      <a href="https://annmax1983.com/extensions.html" target="_blank" rel="noopener" data-i18n="foot.more">More extensions</a>
-      <a href="privacy-policy.html" data-i18n="foot.privacy">Privacy</a>
-      <a href="https://github.com/annmax1983/MarginMate" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://www.annmax1983.com/extensions/marginmate" target="_blank" rel="noopener" data-i18n="foot.site">Website</a>
+      <a href="https://annmax1983.com/extensions.html" target="_blank" rel="noopener" id="i-footer-more">More extensions</a>
+      <a href="privacy-policy.html" id="i-footer-privacy">Privacy</a>
+      <a href="https://github.com/annmax1983/MarginMate" target="_blank" rel="noopener" id="i-footer-github">GitHub</a>
+      <a href="https://www.annmax1983.com/extensions/marginmate" target="_blank" rel="noopener" id="i-footer-site">Website</a>
+      <a href="mailto:support@annmax1983.com">support@annmax1983.com</a>
     </nav>
   </div>
 </footer>
-
 <script>
-const I18N = {
-  en: {
-    "nav.features":"Features","nav.plans":"Free & Pro","nav.privacy":"Privacy","nav.support":"Support",
-    "hero.eyebrow":"Chrome extension",
-    "hero.h1":"Know the profit before you price it.",
-    "hero.tag1":"Fee breakdown","hero.tag2":"Break-even price","hero.tag3":"Search-page margins",
-    "hero.lead":"VKT MarginMate sits on any Amazon product page and shows the money line by line: referral fee, FBA fulfilment, storage, ads, returns and landed cost. You get net profit, margin, ROI and the price you actually need to charge.",
-    "hero.badge1":"Runs locally","hero.badge2":"No account",
-    "hero.cta1":"Get Pro — $19.99","hero.cta2":"Privacy policy","hero.cta3":"View source",
-    "hero.micro":"Free + Pro · Chrome · No account required",
-    "app.sub":"Free + Pro","app.p1":"Amazon fee tables built in","app.p2":"Every number editable","app.p3":"Nothing leaves the browser",
-    "feat.kicker":"What it does","feat.title":"The numbers that decide a product",
-    "feat.sub":"Everything is read from the page you are already looking at, then written as one sentence: this product makes money, or it does not.",
-    "f1.t":"Fee breakdown","f1.d":"Referral fee by category, FBA fulfilment by size tier, storage, inbound placement, ads and returns — each on its own line, with the rate shown.",
-    "f2.t":"Break-even price","f2.d":"The exact price where profit reaches zero, so you know how far a discount can go before it costs you money.",
-    "f3.t":"Target price","f3.d":"Set a margin and get the price to charge for this product, recalculated while you edit cost and freight.",
-    "f4.t":"Search-page margins","f4.d":"A profit badge on every result card and a sort by margin, so an entire niche can be scanned in seconds.",
-    "f5.t":"CSV export","f5.d":"Export a search page or your saved products with the full breakdown — ready for Excel, no copy-paste.",
-    "f6.t":"16 marketplaces","f6.d":"Fee tables and VAT handling per storefront. US ships a tiered FBA table; UK and DE cover referral rates and VAT, with the FBA fee entered manually; other storefronts fall back to the US table.",
-    "more.title":"Where the numbers come from",
-    "more.1":"Rates transcribed from Amazon's public fee schedules, versioned in one file",
-    "more.2":"Tables refresh from a static JSON file, so rate changes need no store review",
-    "more.3":"Every line shows the rate or size tier that produced it",
-    "more.4":"Estimates, not promises — Amazon exceptions are yours to confirm",
-    "plan.kicker":"Pricing","plan.title":"Free, or one payment",
-    "plan.sub":"The panel is free forever. Pro removes the limits and adds the batch view.",
-    "free.title":"Free","free.d":"Profit panel on every product page, break-even and target price, all 16 marketplaces, 3 saved products.",
-    "pro.title":"Pro · $19.99 once","pro.d":"Unlimited saved products, profit badges on every search result, sort by margin, CSV export. Two devices per licence.",
-    "plan.buy":"Buy a licence",
-    "plan.note":"No subscription and no trial: one payment, licence validated once and cached, so the extension keeps working offline.",
-    "priv.kicker":"Privacy","priv.title":"No account, no upload",
-    "priv.lead":"Fee tables, your cost inputs and saved products live in local extension storage. The only network calls are a daily fee-table refresh and, if you activate Pro, a licence check.",
-    "priv.p1":"No page content collected","priv.p2":"No analytics","priv.p3":"Works offline","priv.link":"Read the privacy policy",
-    "sup.kicker":"Support","sup.title":"Made by one developer",
-    "sup.p1":"VKT MarginMate is built and maintained by a single person. If it saved you a spreadsheet, a coffee goes a long way.",
-    "sup.p2":"Found a number that looks wrong? Send the ASIN — Amazon changes fees several times a year, and these reports are how the tables stay current.",
-    "sup.note":"Estimates only. VKT MarginMate is not affiliated with Amazon.",
-    "sup.kofiText":"A small thank you keeps the fee tables updated.","sup.kofi":"Buy me a coffee","sup.noAccount":"No account needed",
-    "foot.more":"More extensions","foot.privacy":"Privacy","foot.site":"Website"
-  },
-  zh: {
-    "nav.features":"功能","nav.plans":"免费与 Pro","nav.privacy":"隐私","nav.support":"支持",
-    "hero.eyebrow":"Chrome 扩展",
-    "hero.h1":"先算清利润，再定售价。",
-    "hero.tag1":"费用逐项拆解","hero.tag2":"保本售价","hero.tag3":"搜索页利润",
-    "hero.lead":"VKT MarginMate 挂在亚马逊商品页上，把每一笔钱摊开：佣金、FBA 配送费、仓储、入库、广告、退货与到岸成本。最后只给你四个结果：净利、净利率、ROI，以及你真正该卖的价格。",
-    "hero.badge1":"本地运行","hero.badge2":"无需账号",
-    "hero.cta1":"获取 Pro — $19.99","hero.cta2":"隐私政策","hero.cta3":"查看源码",
-    "hero.micro":"免费 + Pro · Chrome · 无需注册",
-    "app.sub":"免费 + Pro","app.p1":"内置亚马逊费率表","app.p2":"每个数字都可改","app.p3":"数据不出浏览器",
-    "feat.kicker":"能做什么","feat.title":"决定一个商品成败的几个数字",
-    "feat.sub":"全部从你正在看的页面读取，最后汇成一句话：这个商品赚钱，或者不赚钱。",
-    "f1.t":"费用拆解","f1.d":"按类目的佣金、按尺寸分段的 FBA 配送费、仓储、入库配置、广告与退货，每项单独一行并标出所用费率。",
-    "f2.t":"保本售价","f2.d":"利润归零的那个价格，让你知道折扣能打到哪一步还不亏。",
-    "f3.t":"目标利润价","f3.d":"设定利润率，直接得到该卖多少钱；改成本、改头程时实时重算。",
-    "f4.t":"搜索页利润","f4.d":"每个搜索结果都带利润角标，还能按利润率排序，一个细分市场几十秒扫完。",
-    "f5.t":"CSV 导出","f5.d":"整页搜索结果或已保存商品连成本拆解一起导出，直接进 Excel。",
-    "f6.t":"16 个站点","f6.d":"按站点匹配费率并处理增值税。美国含分档配送费表；英德含佣金率与增值税，配送费手填；其它站点回退美国表。",
-    "more.title":"数字从哪来",
-    "more.1":"费率转录自亚马逊公开费率表，集中在一个版本化文件里",
-    "more.2":"费率表可由静态 JSON 静默刷新，改价不需重新过审",
-    "more.3":"每一行都标出所用费率或尺寸分段",
-    "more.4":"只做估算不打包票，亚马逊的例外规则仍需你确认",
-    "plan.kicker":"定价","plan.title":"免费用，或一次性买断",
-    "plan.sub":"面板永久免费。Pro 解除限制并解锁批量视图。",
-    "free.title":"免费","free.d":"商品页利润面板、保本价与目标价、16 个站点、保存 3 个商品。",
-    "pro.title":"Pro · 一次性 $19.99","pro.d":"保存商品不限、每个搜索结果都有利润角标、按利润率排序、CSV 导出。一个授权 2 台设备。",
-    "plan.buy":"购买授权",
-    "plan.note":"没有订阅，也没有试用期：一次性付款，授权校验一次后缓存到本地，离线也能正常用。",
-    "priv.kicker":"隐私","priv.title":"无账号，不上传",
-    "priv.lead":"费率表、你填的成本、保存的商品全部存在浏览器本地。唯一的网络请求是每天一次费率刷新，以及你激活 Pro 时的授权校验。",
-    "priv.p1":"不采集页面内容","priv.p2":"无统计埋点","priv.p3":"离线可用","priv.link":"阅读隐私政策",
-    "sup.kicker":"支持","sup.title":"一个人维护的扩展",
-    "sup.p1":"VKT MarginMate 由我一个人开发和维护。如果它替你省下了一张表格，请我喝杯咖啡就很够意思。",
-    "sup.p2":"发现数字不对？把 ASIN 发给我。亚马逊一年改好几次费率，这些反馈是费率表能保持准确的原因。",
-    "sup.note":"仅为估算，与亚马逊官方无关联。",
-    "sup.kofiText":"一点支持，让费率表持续更新。","sup.kofi":"请我喝咖啡","sup.noAccount":"无需账号",
-    "foot.more":"更多扩展","foot.privacy":"隐私","foot.site":"官网"
-  },
-  ja: {
-    "nav.features":"機能","nav.plans":"無料と Pro","nav.privacy":"プライバシー","nav.support":"サポート",
-    "hero.eyebrow":"Chrome 拡張機能",
-    "hero.h1":"価格を決める前に、利益を知る。",
-    "hero.tag1":"費用の内訳","hero.tag2":"損益分岐価格","hero.tag3":"検索結果の利益",
-    "hero.lead":"VKT MarginMate は Amazon の商品ページに常駐し、販売手数料・FBA 配送料・保管料・広告費・返品・原価を一行ずつ表示します。最後に残るのは純利益・利益率・ROI、そして「いくらで売るべきか」です。",
-    "hero.badge1":"ローカル処理","hero.badge2":"アカウント不要",
-    "hero.cta1":"Pro を入手 — $19.99","hero.cta2":"プライバシーポリシー","hero.cta3":"ソースを見る",
-    "hero.micro":"無料 + Pro · Chrome · 登録不要",
-    "app.sub":"無料 + Pro","app.p1":"Amazon の料率表を内蔵","app.p2":"数字はすべて編集可能","app.p3":"データは外部に出ません",
-    "feat.kicker":"できること","feat.title":"商品の採算を決める数字",
-    "feat.sub":"表示中のページから読み取り、最後に一文へまとめます。この商品は儲かるのか、儲からないのか。",
-    "f1.t":"費用の内訳","f1.d":"カテゴリ別の販売手数料、サイズ帯別の FBA 配送料、保管料、入庫手数料、広告費、返品を一行ずつ料率付きで表示します。",
-    "f2.t":"損益分岐価格","f2.d":"利益がゼロになる価格。どこまで値引きできるかが分かります。",
-    "f3.t":"目標価格","f3.d":"利益率を決めれば、その商品の売価を算出。原価や輸送費の変更で即再計算します。",
-    "f4.t":"検索結果の利益","f4.d":"検索結果の各カードに利益バッジを表示し、利益率で並べ替え。ニッチ全体を数十秒で確認できます。",
-    "f5.t":"CSV 出力","f5.d":"検索結果や保存した商品を、費用の内訳ごと Excel 向けに出力します。",
-    "f6.t":"16 のマーケット","f6.d":"ストアごとの料率と VAT に対応。US は段階式 FBA 表、英・独は紹介料と VAT（FBA は手入力）、その他は US 表を使用。",
-    "more.title":"数字の出どころ",
-    "more.1":"Amazon の公開料率表を 1 つのバージョン管理ファイルに転記",
-    "more.2":"料率表は静的 JSON から更新でき、審査の再提出は不要",
-    "more.3":"各行に適用した料率・サイズ帯を表示",
-    "more.4":"あくまで推定です。Amazon 側の例外はご確認ください",
-    "plan.kicker":"価格","plan.title":"無料、または買い切り",
-    "plan.sub":"パネルは永久無料。Pro は制限を解除し、一括表示を追加します。",
-    "free.title":"無料","free.d":"商品ページの利益パネル、損益分岐価格と目標価格、16 マーケット、保存 3 件。",
-    "pro.title":"Pro · $19.99 買い切り","pro.d":"保存無制限、検索結果すべてに利益バッジ、利益率で並べ替え、CSV 出力。1 ライセンス 2 台まで。",
-    "plan.buy":"ライセンスを購入",
-    "plan.note":"サブスクも体験版もありません。1 回の支払いで、認証は一度だけ行いキャッシュするので、オフラインでも動作します。",
-    "priv.kicker":"プライバシー","priv.title":"アカウント不要、アップロードなし",
-    "priv.lead":"料率表、入力した原価、保存した商品はすべてブラウザ内に保存されます。通信は 1 日 1 回の料率更新と、Pro 有効化時の認証のみです。",
-    "priv.p1":"ページ内容を収集しません","priv.p2":"解析ツールなし","priv.p3":"オフラインで動作","priv.link":"プライバシーポリシーを読む",
-    "sup.kicker":"サポート","sup.title":"一人で作っています",
-    "sup.p1":"VKT MarginMate は一人で開発・保守しています。表計算の手間が減ったら、コーヒー一杯が大きな支えになります。",
-    "sup.p2":"数字がおかしいと思ったら ASIN をお知らせください。Amazon は年に数回料率を変えるため、報告が正確さを保つ手段です。",
-    "sup.note":"あくまで推定です。Amazon とは無関係です。",
-    "sup.kofiText":"小さな支援が料率表の更新を支えます。","sup.kofi":"コーヒーをおごる","sup.noAccount":"アカウント不要",
-    "foot.more":"他の拡張機能","foot.privacy":"プライバシー","foot.site":"ウェブサイト"
-  },
-  de: {
-    "nav.features":"Funktionen","nav.plans":"Free & Pro","nav.privacy":"Datenschutz","nav.support":"Support",
-    "hero.eyebrow":"Chrome-Erweiterung",
-    "hero.h1":"Erst rechnen, dann bepreisen.",
-    "hero.tag1":"Gebührenaufstellung","hero.tag2":"Break-even-Preis","hero.tag3":"Margen in Suchergebnissen",
-    "hero.lead":"VKT MarginMate liegt auf jeder Amazon-Produktseite und zeigt das Geld Zeile für Zeile: Verkaufsprovision, FBA-Versand, Lager, Werbung, Retouren und Landed Cost. Am Ende bleiben Gewinn, Marge, ROI — und der Preis, den Sie verlangen müssen.",
-    "hero.badge1":"Läuft lokal","hero.badge2":"Kein Konto",
-    "hero.cta1":"Pro holen — 19,99 $","hero.cta2":"Datenschutz","hero.cta3":"Quellcode",
-    "hero.micro":"Free + Pro · Chrome · Ohne Konto",
-    "app.sub":"Free + Pro","app.p1":"Amazon-Gebührentabellen inklusive","app.p2":"Jede Zahl editierbar","app.p3":"Nichts verlässt den Browser",
-    "feat.kicker":"Was es macht","feat.title":"Die Zahlen, die über ein Produkt entscheiden",
-    "feat.sub":"Alles wird von der Seite gelesen, die Sie ohnehin offen haben, und zu einem Satz zusammengefasst: trägt das Produkt oder nicht.",
-    "f1.t":"Gebührenaufstellung","f1.d":"Provision nach Kategorie, FBA-Versand nach Größenklasse, Lager, Inbound Placement, Werbung und Retouren — je eine Zeile, mit Satz.",
-    "f2.t":"Break-even-Preis","f2.d":"Der Preis, bei dem der Gewinn null ist. Sie sehen, wie weit ein Rabatt gehen darf.",
-    "f3.t":"Zielpreis","f3.d":"Marge vorgeben und den nötigen Preis erhalten — neu berechnet, während Sie Kosten und Fracht ändern.",
-    "f4.t":"Margen in Suchergebnissen","f4.d":"Gewinn-Badge auf jeder Ergebniskarte und Sortierung nach Marge, damit eine Nische in Sekunden lesbar wird.",
-    "f5.t":"CSV-Export","f5.d":"Suchergebnisse oder gespeicherte Produkte inklusive Aufstellung exportieren — direkt für Excel.",
-    "f6.t":"16 Marktplätze","f6.d":"Gebührentabellen und VAT je Storefront. US mit gestaffelter FBA-Tabelle, UK und DE mit Provision und VAT (FBA manuell), andere nutzen die US-Tabelle.",
-    "more.title":"Woher die Zahlen kommen",
-    "more.1":"Sätze aus Amazons öffentlichen Gebührenplänen, versioniert in einer Datei",
-    "more.2":"Tabellen aktualisieren sich über eine statische JSON-Datei — ohne Store-Review",
-    "more.3":"Jede Zeile zeigt den Satz oder die Größenklasse",
-    "more.4":"Schätzungen, kein Versprechen — Amazon-Ausnahmen prüfen Sie selbst",
-    "plan.kicker":"Preise","plan.title":"Kostenlos oder einmal zahlen",
-    "plan.sub":"Das Panel bleibt kostenlos. Pro hebt die Grenzen auf und ergänzt die Batch-Ansicht.",
-    "free.title":"Free","free.d":"Gewinn-Panel auf jeder Produktseite, Break-even und Zielpreis, alle 16 Marktplätze, 3 gespeicherte Produkte.",
-    "pro.title":"Pro · 19,99 $ einmalig","pro.d":"Unbegrenzt speichern, Badges in allen Suchergebnissen, Sortierung nach Marge, CSV-Export. Zwei Geräte pro Lizenz.",
-    "plan.buy":"Lizenz kaufen",
-    "plan.note":"Kein Abo und keine Testphase: einmal zahlen, Lizenz einmal prüfen und cachen — die Erweiterung läuft offline weiter.",
-    "priv.kicker":"Datenschutz","priv.title":"Kein Konto, kein Upload",
-    "priv.lead":"Gebührentabellen, Ihre Kosten und gespeicherte Produkte liegen im lokalen Speicher der Erweiterung. Netzwerkzugriffe: tägliche Tabellenaktualisierung und, bei Pro, eine Lizenzprüfung.",
-    "priv.p1":"Keine Seiteninhalte gesammelt","priv.p2":"Keine Analyse","priv.p3":"Offline nutzbar","priv.link":"Datenschutzerklärung lesen",
-    "sup.kicker":"Support","sup.title":"Von einem Entwickler",
-    "sup.p1":"VKT MarginMate wird von einer Person gebaut und gepflegt. Wenn es Ihnen eine Tabelle erspart hat, hilft ein Kaffee.",
-    "sup.p2":"Eine Zahl wirkt falsch? Schicken Sie die ASIN — Amazon ändert Gebühren mehrmals im Jahr, und solche Meldungen halten die Tabellen aktuell.",
-    "sup.note":"Nur Schätzungen. VKT MarginMate steht in keiner Verbindung zu Amazon.",
-    "sup.kofiText":"Eine kleine Unterstützung hält die Tabellen aktuell.","sup.kofi":"Kaffee spendieren","sup.noAccount":"Ohne Konto",
-    "foot.more":"Weitere Erweiterungen","foot.privacy":"Datenschutz","foot.site":"Webseite"
-  },
-  es: {
-    "nav.features":"Funciones","nav.plans":"Gratis y Pro","nav.privacy":"Privacidad","nav.support":"Soporte",
-    "hero.eyebrow":"Extensión de Chrome",
-    "hero.h1":"Calcula el beneficio antes de poner precio.",
-    "hero.tag1":"Desglose de comisiones","hero.tag2":"Precio de equilibrio","hero.tag3":"Márgenes en resultados",
-    "hero.lead":"VKT MarginMate vive en la ficha de cualquier producto de Amazon y muestra el dinero línea a línea: comisión, envío FBA, almacenaje, publicidad, devoluciones y coste de compra. Al final quedan cuatro datos: beneficio, margen, ROI y el precio que deberías cobrar.",
-    "hero.badge1":"Todo local","hero.badge2":"Sin cuenta",
-    "hero.cta1":"Obtener Pro — 19,99 $","hero.cta2":"Política de privacidad","hero.cta3":"Ver código",
-    "hero.micro":"Gratis + Pro · Chrome · Sin registro",
-    "app.sub":"Gratis + Pro","app.p1":"Tarifas de Amazon incluidas","app.p2":"Cada cifra editable","app.p3":"Nada sale del navegador",
-    "feat.kicker":"Qué hace","feat.title":"Las cifras que deciden un producto",
-    "feat.sub":"Todo se lee de la página que ya tienes abierta y se resume en una frase: este producto gana dinero, o no.",
-    "f1.t":"Desglose de comisiones","f1.d":"Comisión por categoría, envío FBA por tramo de tamaño, almacenaje, colocación, publicidad y devoluciones, cada uno en su línea con su tarifa.",
-    "f2.t":"Precio de equilibrio","f2.d":"El precio exacto donde el beneficio es cero, para saber hasta dónde puede bajar un descuento.",
-    "f3.t":"Precio objetivo","f3.d":"Fija un margen y obtén el precio a cobrar; se recalcula mientras editas coste y transporte.",
-    "f4.t":"Márgenes en resultados","f4.d":"Una insignia de beneficio en cada resultado y orden por margen: un nicho completo en segundos.",
-    "f5.t":"Exportar CSV","f5.d":"Exporta una página de resultados o tus productos guardados con todo el desglose, listo para Excel.",
-    "f6.t":"16 marketplaces","f6.d":"Tarifas e IVA por tienda. EE. UU. con tabla FBA por tramos; UK y DE con comisión e IVA (FBA a mano); el resto usa la tabla de EE. UU.",
-    "more.title":"De dónde salen las cifras",
-    "more.1":"Tarifas copiadas de las tablas públicas de Amazon, versionadas en un solo archivo",
-    "more.2":"Las tablas se actualizan desde un JSON estático, sin revisión de la tienda",
-    "more.3":"Cada línea muestra la tarifa o el tramo aplicado",
-    "more.4":"Son estimaciones: las excepciones de Amazon las confirmas tú",
-    "plan.kicker":"Precio","plan.title":"Gratis o pago único",
-    "plan.sub":"El panel es gratis para siempre. Pro quita los límites y añade la vista por lotes.",
-    "free.title":"Gratis","free.d":"Panel de beneficio en cada ficha, precio de equilibrio y objetivo, 16 marketplaces, 3 productos guardados.",
-    "pro.title":"Pro · 19,99 $ una vez","pro.d":"Productos ilimitados, insignias en todos los resultados, orden por margen y exportación CSV. Dos dispositivos por licencia.",
-    "plan.buy":"Comprar licencia",
-    "plan.note":"Sin suscripción y sin prueba: un pago único, licencia validada una vez y guardada en caché, así que funciona sin conexión.",
-    "priv.kicker":"Privacidad","priv.title":"Sin cuenta, sin subidas",
-    "priv.lead":"Las tarifas, tus costes y los productos guardados viven en el almacenamiento local de la extensión. Solo hay dos llamadas: la actualización diaria de tarifas y, con Pro, la validación de licencia.",
-    "priv.p1":"No se recoge el contenido de la página","priv.p2":"Sin analítica","priv.p3":"Funciona sin conexión","priv.link":"Leer la política de privacidad",
-    "sup.kicker":"Soporte","sup.title":"Hecho por una persona",
-    "sup.p1":"VKT MarginMate lo desarrolla y mantiene una sola persona. Si te ahorró una hoja de cálculo, un café ayuda mucho.",
-    "sup.p2":"¿Una cifra no cuadra? Envíame el ASIN: Amazon cambia tarifas varias veces al año y esos avisos mantienen las tablas al día.",
-    "sup.note":"Solo estimaciones. VKT MarginMate no está afiliado a Amazon.",
-    "sup.kofiText":"Un pequeño apoyo mantiene las tarifas al día.","sup.kofi":"Invítame a un café","sup.noAccount":"Sin cuenta",
-    "foot.more":"Más extensiones","foot.privacy":"Privacidad","foot.site":"Sitio web"
-  },
-  fr: {
-    "nav.features":"Fonctions","nav.plans":"Gratuit et Pro","nav.privacy":"Confidentialité","nav.support":"Soutien",
-    "hero.eyebrow":"Extension Chrome",
-    "hero.h1":"Connaître la marge avant de fixer le prix.",
-    "hero.tag1":"Détail des frais","hero.tag2":"Prix d'équilibre","hero.tag3":"Marges en recherche",
-    "hero.lead":"VKT MarginMate s'installe sur chaque fiche produit Amazon et détaille l'argent ligne par ligne : commission, expédition FBA, stockage, publicité, retours et coût rendu. Il reste le bénéfice, la marge, le ROI et le prix à pratiquer.",
-    "hero.badge1":"100 % local","hero.badge2":"Sans compte",
-    "hero.cta1":"Obtenir Pro — 19,99 $","hero.cta2":"Confidentialité","hero.cta3":"Voir le code",
-    "hero.micro":"Gratuit + Pro · Chrome · Sans inscription",
-    "app.sub":"Gratuit + Pro","app.p1":"Barèmes Amazon intégrés","app.p2":"Chaque chiffre modifiable","app.p3":"Rien ne quitte le navigateur",
-    "feat.kicker":"Ce qu'il fait","feat.title":"Les chiffres qui décident d'un produit",
-    "feat.sub":"Tout est lu sur la page déjà ouverte, puis résumé en une phrase : ce produit gagne de l'argent, ou pas.",
-    "f1.t":"Détail des frais","f1.d":"Commission par catégorie, expédition FBA par tranche de taille, stockage, placement, publicité et retours — une ligne chacun, taux affiché.",
-    "f2.t":"Prix d'équilibre","f2.d":"Le prix exact où le bénéfice tombe à zéro : vous savez jusqu'où une remise reste rentable.",
-    "f3.t":"Prix cible","f3.d":"Fixez une marge et obtenez le prix à pratiquer, recalculé pendant la saisie du coût et du transport.",
-    "f4.t":"Marges en recherche","f4.d":"Un badge de bénéfice sur chaque résultat et un tri par marge : une niche se lit en quelques secondes.",
-    "f5.t":"Export CSV","f5.d":"Exportez une page de résultats ou vos produits enregistrés avec tout le détail, prêt pour Excel.",
-    "f6.t":"16 places de marché","f6.d":"Barèmes et TVA par boutique. US avec barème FBA par paliers ; UK/DE commission et TVA (FBA saisi à la main) ; les autres utilisent le barème US.",
-    "more.title":"D'où viennent les chiffres",
-    "more.1":"Taux recopiés des barèmes publics d'Amazon, versionnés dans un seul fichier",
-    "more.2":"Les barèmes se mettent à jour via un JSON statique, sans nouvelle validation du store",
-    "more.3":"Chaque ligne indique le taux ou la tranche appliquée",
-    "more.4":"Des estimations, pas des promesses : les exceptions Amazon restent à vérifier",
-    "plan.kicker":"Tarif","plan.title":"Gratuit, ou un paiement",
-    "plan.sub":"Le panneau reste gratuit. Pro supprime les limites et ajoute la vue par lot.",
-    "free.title":"Gratuit","free.d":"Panneau de bénéfice sur chaque fiche, prix d'équilibre et cible, 16 places de marché, 3 produits enregistrés.",
-    "pro.title":"Pro · 19,99 $ une fois","pro.d":"Produits illimités, badges sur tous les résultats, tri par marge, export CSV. Deux appareils par licence.",
-    "plan.buy":"Acheter une licence",
-    "plan.note":"Ni abonnement ni essai : un paiement unique, licence validée une fois puis mise en cache, l'extension fonctionne hors ligne.",
-    "priv.kicker":"Confidentialité","priv.title":"Sans compte, sans envoi",
-    "priv.lead":"Barèmes, vos coûts et vos produits enregistrés restent dans le stockage local de l'extension. Seuls appels réseau : la mise à jour quotidienne des barèmes et, avec Pro, la validation de licence.",
-    "priv.p1":"Aucun contenu de page collecté","priv.p2":"Aucune analytique","priv.p3":"Fonctionne hors ligne","priv.link":"Lire la politique de confidentialité",
-    "sup.kicker":"Soutien","sup.title":"Développé par une personne",
-    "sup.p1":"VKT MarginMate est développé et maintenu par une seule personne. Si l'outil vous a épargné un tableur, un café fait plaisir.",
-    "sup.p2":"Un chiffre vous semble faux ? Envoyez l'ASIN — Amazon change ses frais plusieurs fois par an, et ces retours gardent les barèmes à jour.",
-    "sup.note":"Estimations uniquement. VKT MarginMate n'est pas affilié à Amazon.",
-    "sup.kofiText":"Un petit soutien maintient les barèmes à jour.","sup.kofi":"Offrir un café","sup.noAccount":"Sans compte",
-    "foot.more":"Autres extensions","foot.privacy":"Confidentialité","foot.site":"Site web"
-  }
-};
-
+const MODEL = {"name":"VKT MarginMate","icon":"icons/icon128.png","github":"https://github.com/annmax1983/MarginMate","site":"https://www.annmax1983.com/extensions/marginmate","support":"https://ko-fi.com/annmax?ref=marginmate","slug":"marginmate","langs":{"en":{"tagline":"Fee breakdown · Break-even price · Search-page margins","intro":"VKT MarginMate sits on any Amazon product page and shows the money line by line: referral fee, FBA fulfilment, storage, ads, returns and landed cost. You get net profit, margin, ROI and the price you actually need to charge.","why":["Fee breakdown: Referral fee by category, FBA fulfilment by size tier, storage, inbound placement, ads and returns — each on its own line, with the rate shown.","Break-even price: The exact price where profit reaches zero, so you know how far a discount can go before it costs you money.","Target price: Set a margin and get the price to charge for this product, recalculated while you edit cost and freight.","Search-page margins: Profit badges on the first three result cards — every result with Pro — plus a sort by margin, so an entire niche can be scanned in seconds.","CSV export: Export a search page or your saved products with the full breakdown — ready for Excel, no copy-paste.","16 marketplaces: Fee tables and VAT handling per storefront. US ships a tiered FBA table; UK and DE cover referral rates and VAT, with the FBA fee entered manually; other storefronts fall back to the US table.","Rates transcribed from Amazon's public fee schedules, versioned in one file","Tables refresh from a static JSON file, so rate changes need no store review","Every line shows the rate or size tier that produced it","Estimates, not promises — Amazon exceptions are yours to confirm"],"plan":{"free":"Profit panel on every product page, break-even and target price, all 16 marketplaces, 3 saved products.","premium":"Unlimited saved products, profit badges on every search result, sort by margin, CSV export. Two devices per licence.","note":"No subscription and no trial: one payment, licence validated once and cached, so the extension keeps working offline."},"thankTitle":"Made by one developer","thank":["VKT MarginMate is built and maintained by a single person. If it saved you a spreadsheet, a coffee goes a long way.","Found a number that looks wrong? Send the ASIN — Amazon changes fees several times a year, and these reports are how the tables stay current."],"disclaimer":"Estimates only. VKT MarginMate is not affiliated with Amazon.","ctaHint":"A small thank you keeps the fee tables updated.","btnText":"Buy me a coffee","ui":{"navFeatures":"Features","navPlans":"Free & Pro","navPrivacy":"Privacy","navSupport":"Support","eyebrow":"Chrome & Edge extension","badgeFree":"Free + Pro","badgeLocal":"Runs locally","badgeNoTrack":"No account","badgeBrowsers":"Chrome & Edge","ctaGet":"Get Pro — $19.99","ctaPrivacy":"Privacy policy","ctaSource":"View source","featuresTitle":"The numbers that decide a product","featuresLead":"Everything is read from the page you are already looking at, then written as one sentence: this product makes money, or it does not.","moreTitle":"Where the numbers come from","proLabel":"Pro","freeLabel":"Free","premiumLabel":"Pro · $19.99 once","planTitle":"Free, or one payment","planLead":"The panel is free forever. Pro removes the limits and adds the batch view.","privacyTitle":"No account, no upload","privacyLead":"Fee tables, your cost inputs and saved products live in local extension storage. The only network calls are a daily fee-table refresh and, if you activate Pro, a licence check.","privacyPoints":["No page content collected","No analytics","Works offline"],"privacyCta":"Read the privacy policy","supportEyebrow":"Support","supportHint":"A small thank you keeps the fee tables updated.","footerMore":"More extensions","footerPrivacy":"Privacy","footerGithub":"GitHub","footerSite":"Website"}},"zh":{"tagline":"费用逐项拆解 · 保本售价 · 搜索页利润","intro":"VKT MarginMate 挂在亚马逊商品页上，把每一笔钱摊开：佣金、FBA 配送费、仓储、入库、广告、退货与到岸成本。最后只给你四个结果：净利、净利率、ROI，以及你真正该卖的价格。","why":["费用拆解：按类目的佣金、按尺寸分段的 FBA 配送费、仓储、入库配置、广告与退货，每项单独一行并标出所用费率。","保本售价：利润归零的那个价格，让你知道折扣能打到哪一步还不亏。","目标利润价：设定利润率，直接得到该卖多少钱；改成本、改头程时实时重算。","搜索页利润：搜索结果带利润角标（免费版前 3 条，Pro 全量），还能按利润率排序，一个细分市场几十秒扫完。","CSV 导出：整页搜索结果或已保存商品连成本拆解一起导出，直接进 Excel。","16 个站点：按站点匹配费率并处理增值税。美国含分档配送费表；英德含佣金率与增值税，配送费手填；其它站点回退美国表。","费率转录自亚马逊公开费率表，集中在一个版本化文件里","费率表可由静态 JSON 静默刷新，改价不需重新过审","每一行都标出所用费率或尺寸分段","只做估算不打包票，亚马逊的例外规则仍需你确认"],"plan":{"free":"商品页利润面板、保本价与目标价、16 个站点、保存 3 个商品。","premium":"保存商品不限、每个搜索结果都有利润角标、按利润率排序、CSV 导出。一个授权 2 台设备。","note":"没有订阅，也没有试用期：一次性付款，授权校验一次后缓存到本地，离线也能正常用。"},"thankTitle":"一个人维护的扩展","thank":["VKT MarginMate 由我一个人开发和维护。如果它替你省下了一张表格，请我喝杯咖啡就很够意思。","发现数字不对？把 ASIN 发给我。亚马逊一年改好几次费率，这些反馈是费率表能保持准确的原因。"],"disclaimer":"仅为估算，与亚马逊官方无关联。","ctaHint":"一点支持，让费率表持续更新。","btnText":"请我喝咖啡","ui":{"navFeatures":"功能","navPlans":"免费与 Pro","navPrivacy":"隐私","navSupport":"支持","eyebrow":"Chrome / Edge 扩展","badgeFree":"免费 + Pro","badgeLocal":"本地运行","badgeNoTrack":"无需账号","badgeBrowsers":"Chrome / Edge","ctaGet":"获取 Pro — $19.99","ctaPrivacy":"隐私政策","ctaSource":"查看源码","featuresTitle":"决定一个商品成败的几个数字","featuresLead":"全部从你正在看的页面读取，最后汇成一句话：这个商品赚钱，或者不赚钱。","moreTitle":"数字从哪来","proLabel":"Pro","freeLabel":"免费","premiumLabel":"Pro · 一次性 $19.99","planTitle":"免费用，或一次性买断","planLead":"面板永久免费。Pro 解除限制并解锁批量视图。","privacyTitle":"无账号，不上传","privacyLead":"费率表、你填的成本、保存的商品全部存在浏览器本地。唯一的网络请求是每天一次费率刷新，以及你激活 Pro 时的授权校验。","privacyPoints":["不采集页面内容","无统计埋点","离线可用"],"privacyCta":"阅读隐私政策","supportEyebrow":"支持","supportHint":"一点支持，让费率表持续更新。","footerMore":"更多扩展","footerPrivacy":"隐私","footerGithub":"GitHub","footerSite":"官网"}},"ja":{"tagline":"費用の内訳 · 損益分岐価格 · 検索結果の利益","intro":"VKT MarginMate は Amazon の商品ページに常駐し、販売手数料・FBA 配送料・保管料・広告費・返品・原価を一行ずつ表示します。最後に残るのは純利益・利益率・ROI、そして「いくらで売るべきか」です。","why":["費用の内訳：カテゴリ別の販売手数料、サイズ帯別の FBA 配送料、保管料、入庫手数料、広告費、返品を一行ずつ料率付きで表示します。","損益分岐価格：利益がゼロになる価格。どこまで値引きできるかが分かります。","目標価格：利益率を決めれば、その商品の売価を算出。原価や輸送費の変更で即再計算します。","検索結果の利益：検索結果に利益バッジを表示（無料版は上位 3 件、Pro は全件）、利益率で並べ替え。ニッチ全体を数十秒で確認できます。","CSV 出力：検索結果や保存した商品を、費用の内訳ごと Excel 向けに出力します。","16 のマーケット：ストアごとの料率と VAT に対応。US は段階式 FBA 表、英・独は紹介料と VAT（FBA は手入力）、その他は US 表を使用。","Amazon の公開料率表を 1 つのバージョン管理ファイルに転記","料率表は静的 JSON から更新でき、審査の再提出は不要","各行に適用した料率・サイズ帯を表示","あくまで推定です。Amazon 側の例外はご確認ください"],"plan":{"free":"商品ページの利益パネル、損益分岐価格と目標価格、16 マーケット、保存 3 件。","premium":"保存無制限、検索結果すべてに利益バッジ、利益率で並べ替え、CSV 出力。1 ライセンス 2 台まで。","note":"サブスクも体験版もありません。1 回の支払いで、認証は一度だけ行いキャッシュするので、オフラインでも動作します。"},"thankTitle":"一人で作っています","thank":["VKT MarginMate は一人で開発・保守しています。表計算の手間が減ったら、コーヒー一杯が大きな支えになります。","数字がおかしいと思ったら ASIN をお知らせください。Amazon は年に数回料率を変えるため、報告が正確さを保つ手段です。"],"disclaimer":"あくまで推定です。Amazon とは無関係です。","ctaHint":"小さな支援が料率表の更新を支えます。","btnText":"コーヒーをおごる","ui":{"navFeatures":"機能","navPlans":"無料と Pro","navPrivacy":"プライバシー","navSupport":"サポート","eyebrow":"Chrome / Edge 拡張機能","badgeFree":"無料 + Pro","badgeLocal":"ローカル処理","badgeNoTrack":"アカウント不要","badgeBrowsers":"Chrome / Edge","ctaGet":"Pro を入手 — $19.99","ctaPrivacy":"プライバシーポリシー","ctaSource":"ソースを見る","featuresTitle":"商品の採算を決める数字","featuresLead":"表示中のページから読み取り、最後に一文へまとめます。この商品は儲かるのか、儲からないのか。","moreTitle":"数字の出どころ","proLabel":"Pro","freeLabel":"無料","premiumLabel":"Pro · $19.99 買い切り","planTitle":"無料、または買い切り","planLead":"パネルは永久無料。Pro は制限を解除し、一括表示を追加します。","privacyTitle":"アカウント不要、アップロードなし","privacyLead":"料率表、入力した原価、保存した商品はすべてブラウザ内に保存されます。通信は 1 日 1 回の料率更新と、Pro 有効化時の認証のみです。","privacyPoints":["ページ内容を収集しません","解析ツールなし","オフラインで動作"],"privacyCta":"プライバシーポリシーを読む","supportEyebrow":"サポート","supportHint":"小さな支援が料率表の更新を支えます。","footerMore":"他の拡張機能","footerPrivacy":"プライバシー","footerGithub":"GitHub","footerSite":"ウェブサイト"}},"de":{"tagline":"Gebührenaufstellung · Break-even-Preis · Margen in Suchergebnissen","intro":"VKT MarginMate liegt auf jeder Amazon-Produktseite und zeigt das Geld Zeile für Zeile: Verkaufsprovision, FBA-Versand, Lager, Werbung, Retouren und Landed Cost. Am Ende bleiben Gewinn, Marge, ROI — und der Preis, den Sie verlangen müssen.","why":["Gebührenaufstellung: Provision nach Kategorie, FBA-Versand nach Größenklasse, Lager, Inbound Placement, Werbung und Retouren — je eine Zeile, mit Satz.","Break-even-Preis: Der Preis, bei dem der Gewinn null ist. Sie sehen, wie weit ein Rabatt gehen darf.","Zielpreis: Marge vorgeben und den nötigen Preis erhalten — neu berechnet, während Sie Kosten und Fracht ändern.","Margen in Suchergebnissen: Gewinn-Badge auf den ersten drei Ergebniskarten (mit Pro auf allen) und Sortierung nach Marge, damit eine Nische in Sekunden lesbar wird.","CSV-Export: Suchergebnisse oder gespeicherte Produkte inklusive Aufstellung exportieren — direkt für Excel.","16 Marktplätze: Gebührentabellen und VAT je Storefront. US mit gestaffelter FBA-Tabelle, UK und DE mit Provision und VAT (FBA manuell), andere nutzen die US-Tabelle.","Sätze aus Amazons öffentlichen Gebührenplänen, versioniert in einer Datei","Tabellen aktualisieren sich über eine statische JSON-Datei — ohne Store-Review","Jede Zeile zeigt den Satz oder die Größenklasse","Schätzungen, kein Versprechen — Amazon-Ausnahmen prüfen Sie selbst"],"plan":{"free":"Gewinn-Panel auf jeder Produktseite, Break-even und Zielpreis, alle 16 Marktplätze, 3 gespeicherte Produkte.","premium":"Unbegrenzt speichern, Badges in allen Suchergebnissen, Sortierung nach Marge, CSV-Export. Zwei Geräte pro Lizenz.","note":"Kein Abo und keine Testphase: einmal zahlen, Lizenz einmal prüfen und cachen — die Erweiterung läuft offline weiter."},"thankTitle":"Von einem Entwickler","thank":["VKT MarginMate wird von einer Person gebaut und gepflegt. Wenn es Ihnen eine Tabelle erspart hat, hilft ein Kaffee.","Eine Zahl wirkt falsch? Schicken Sie die ASIN — Amazon ändert Gebühren mehrmals im Jahr, und solche Meldungen halten die Tabellen aktuell."],"disclaimer":"Nur Schätzungen. VKT MarginMate steht in keiner Verbindung zu Amazon.","ctaHint":"Eine kleine Unterstützung hält die Tabellen aktuell.","btnText":"Kaffee spendieren","ui":{"navFeatures":"Funktionen","navPlans":"Free & Pro","navPrivacy":"Datenschutz","navSupport":"Support","eyebrow":"Chrome- und Edge-Erweiterung","badgeFree":"Free + Pro","badgeLocal":"Läuft lokal","badgeNoTrack":"Kein Konto","badgeBrowsers":"Chrome & Edge","ctaGet":"Pro holen — 19,99 $","ctaPrivacy":"Datenschutz","ctaSource":"Quellcode","featuresTitle":"Die Zahlen, die über ein Produkt entscheiden","featuresLead":"Alles wird von der Seite gelesen, die Sie ohnehin offen haben, und zu einem Satz zusammengefasst: trägt das Produkt oder nicht.","moreTitle":"Woher die Zahlen kommen","proLabel":"Pro","freeLabel":"Free","premiumLabel":"Pro · 19,99 $ einmalig","planTitle":"Kostenlos oder einmal zahlen","planLead":"Das Panel bleibt kostenlos. Pro hebt die Grenzen auf und ergänzt die Batch-Ansicht.","privacyTitle":"Kein Konto, kein Upload","privacyLead":"Gebührentabellen, Ihre Kosten und gespeicherte Produkte liegen im lokalen Speicher der Erweiterung. Netzwerkzugriffe: tägliche Tabellenaktualisierung und, bei Pro, eine Lizenzprüfung.","privacyPoints":["Keine Seiteninhalte gesammelt","Keine Analyse","Offline nutzbar"],"privacyCta":"Datenschutzerklärung lesen","supportEyebrow":"Support","supportHint":"Eine kleine Unterstützung hält die Tabellen aktuell.","footerMore":"Weitere Erweiterungen","footerPrivacy":"Datenschutz","footerGithub":"GitHub","footerSite":"Webseite"}},"es":{"tagline":"Desglose de comisiones · Precio de equilibrio · Márgenes en resultados","intro":"VKT MarginMate vive en la ficha de cualquier producto de Amazon y muestra el dinero línea a línea: comisión, envío FBA, almacenaje, publicidad, devoluciones y coste de compra. Al final quedan cuatro datos: beneficio, margen, ROI y el precio que deberías cobrar.","why":["Desglose de comisiones: Comisión por categoría, envío FBA por tramo de tamaño, almacenaje, colocación, publicidad y devoluciones, cada uno en su línea con su tarifa.","Precio de equilibrio: El precio exacto donde el beneficio es cero, para saber hasta dónde puede bajar un descuento.","Precio objetivo: Fija un margen y obtén el precio a cobrar; se recalcula mientras editas coste y transporte.","Márgenes en resultados: Insignia de beneficio en los tres primeros resultados (todos con Pro) y orden por margen: un nicho completo en segundos.","Exportar CSV: Exporta una página de resultados o tus productos guardados con todo el desglose, listo para Excel.","16 marketplaces: Tarifas e IVA por tienda. EE. UU. con tabla FBA por tramos; UK y DE con comisión e IVA (FBA a mano); el resto usa la tabla de EE. UU.","Tarifas copiadas de las tablas públicas de Amazon, versionadas en un solo archivo","Las tablas se actualizan desde un JSON estático, sin revisión de la tienda","Cada línea muestra la tarifa o el tramo aplicado","Son estimaciones: las excepciones de Amazon las confirmas tú"],"plan":{"free":"Panel de beneficio en cada ficha, precio de equilibrio y objetivo, 16 marketplaces, 3 productos guardados.","premium":"Productos ilimitados, insignias en todos los resultados, orden por margen y exportación CSV. Dos dispositivos por licencia.","note":"Sin suscripción y sin prueba: un pago único, licencia validada una vez y guardada en caché, así que funciona sin conexión."},"thankTitle":"Hecho por una persona","thank":["VKT MarginMate lo desarrolla y mantiene una sola persona. Si te ahorró una hoja de cálculo, un café ayuda mucho.","¿Una cifra no cuadra? Envíame el ASIN: Amazon cambia tarifas varias veces al año y esos avisos mantienen las tablas al día."],"disclaimer":"Solo estimaciones. VKT MarginMate no está afiliado a Amazon.","ctaHint":"Un pequeño apoyo mantiene las tarifas al día.","btnText":"Invítame a un café","ui":{"navFeatures":"Funciones","navPlans":"Gratis y Pro","navPrivacy":"Privacidad","navSupport":"Soporte","eyebrow":"Extensión de Chrome y Edge","badgeFree":"Gratis + Pro","badgeLocal":"Todo local","badgeNoTrack":"Sin cuenta","badgeBrowsers":"Chrome & Edge","ctaGet":"Obtener Pro — 19,99 $","ctaPrivacy":"Política de privacidad","ctaSource":"Ver código","featuresTitle":"Las cifras que deciden un producto","featuresLead":"Todo se lee de la página que ya tienes abierta y se resume en una frase: este producto gana dinero, o no.","moreTitle":"De dónde salen las cifras","proLabel":"Pro","freeLabel":"Gratis","premiumLabel":"Pro · 19,99 $ una vez","planTitle":"Gratis o pago único","planLead":"El panel es gratis para siempre. Pro quita los límites y añade la vista por lotes.","privacyTitle":"Sin cuenta, sin subidas","privacyLead":"Las tarifas, tus costes y los productos guardados viven en el almacenamiento local de la extensión. Solo hay dos llamadas: la actualización diaria de tarifas y, con Pro, la validación de licencia.","privacyPoints":["No se recoge el contenido de la página","Sin analítica","Funciona sin conexión"],"privacyCta":"Leer la política de privacidad","supportEyebrow":"Soporte","supportHint":"Un pequeño apoyo mantiene las tarifas al día.","footerMore":"Más extensiones","footerPrivacy":"Privacidad","footerGithub":"GitHub","footerSite":"Sitio web"}},"fr":{"tagline":"Détail des frais · Prix d'équilibre · Marges en recherche","intro":"VKT MarginMate s'installe sur chaque fiche produit Amazon et détaille l'argent ligne par ligne : commission, expédition FBA, stockage, publicité, retours et coût rendu. Il reste le bénéfice, la marge, le ROI et le prix à pratiquer.","why":["Détail des frais: Commission par catégorie, expédition FBA par tranche de taille, stockage, placement, publicité et retours — une ligne chacun, taux affiché.","Prix d'équilibre: Le prix exact où le bénéfice tombe à zéro : vous savez jusqu'où une remise reste rentable.","Prix cible: Fixez une marge et obtenez le prix à pratiquer, recalculé pendant la saisie du coût et du transport.","Marges en recherche: Un badge de bénéfice sur les trois premiers résultats (tous avec Pro) et un tri par marge : une niche se lit en quelques secondes.","Export CSV: Exportez une page de résultats ou vos produits enregistrés avec tout le détail, prêt pour Excel.","16 places de marché: Barèmes et TVA par boutique. US avec barème FBA par paliers ; UK/DE commission et TVA (FBA saisi à la main) ; les autres utilisent le barème US.","Taux recopiés des barèmes publics d'Amazon, versionnés dans un seul fichier","Les barèmes se mettent à jour via un JSON statique, sans nouvelle validation du store","Chaque ligne indique le taux ou la tranche appliquée","Des estimations, pas des promesses : les exceptions Amazon restent à vérifier"],"plan":{"free":"Panneau de bénéfice sur chaque fiche, prix d'équilibre et cible, 16 places de marché, 3 produits enregistrés.","premium":"Produits illimités, badges sur tous les résultats, tri par marge, export CSV. Deux appareils par licence.","note":"Ni abonnement ni essai : un paiement unique, licence validée une fois puis mise en cache, l'extension fonctionne hors ligne."},"thankTitle":"Développé par une personne","thank":["VKT MarginMate est développé et maintenu par une seule personne. Si l'outil vous a épargné un tableur, un café fait plaisir.","Un chiffre vous semble faux ? Envoyez l'ASIN — Amazon change ses frais plusieurs fois par an, et ces retours gardent les barèmes à jour."],"disclaimer":"Estimations uniquement. VKT MarginMate n'est pas affilié à Amazon.","ctaHint":"Un petit soutien maintient les barèmes à jour.","btnText":"Offrir un café","ui":{"navFeatures":"Fonctions","navPlans":"Gratuit et Pro","navPrivacy":"Confidentialité","navSupport":"Soutien","eyebrow":"Extension Chrome et Edge","badgeFree":"Gratuit + Pro","badgeLocal":"100 % local","badgeNoTrack":"Sans compte","badgeBrowsers":"Chrome & Edge","ctaGet":"Obtenir Pro — 19,99 $","ctaPrivacy":"Confidentialité","ctaSource":"Voir le code","featuresTitle":"Les chiffres qui décident d'un produit","featuresLead":"Tout est lu sur la page déjà ouverte, puis résumé en une phrase : ce produit gagne de l'argent, ou pas.","moreTitle":"D'où viennent les chiffres","proLabel":"Pro","freeLabel":"Gratuit","premiumLabel":"Pro · 19,99 $ une fois","planTitle":"Gratuit, ou un paiement","planLead":"Le panneau reste gratuit. Pro supprime les limites et ajoute la vue par lot.","privacyTitle":"Sans compte, sans envoi","privacyLead":"Barèmes, vos coûts et vos produits enregistrés restent dans le stockage local de l'extension. Seuls appels réseau : la mise à jour quotidienne des barèmes et, avec Pro, la validation de licence.","privacyPoints":["Aucun contenu de page collecté","Aucune analytique","Fonctionne hors ligne"],"privacyCta":"Lire la politique de confidentialité","supportEyebrow":"Soutien","supportHint":"Un petit soutien maintient les barèmes à jour.","footerMore":"Autres extensions","footerPrivacy":"Confidentialité","footerGithub":"GitHub","footerSite":"Site web"}}}};
+const LANG_KEY = "vkt-marginmate-lang";
 (function () {
-  const sel = document.getElementById("lang");
-  const dict = (lang) => I18N[lang] || I18N.en;
+  "use strict";
 
-  function apply(lang) {
-    const d = dict(lang);
-    document.querySelectorAll("[data-i18n]").forEach((el) => {
-      const v = d[el.dataset.i18n] || I18N.en[el.dataset.i18n];
-      if (v) el.textContent = v;
-    });
-    document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
-    try { localStorage.setItem("mm.lang", lang); } catch (e) {}
+  var select = document.getElementById("i-lang");
+
+  function esc(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
   }
 
-  let saved = "en";
-  try { saved = localStorage.getItem("mm.lang") || (navigator.language || "en").slice(0, 2); } catch (e) {}
-  if (!I18N[saved]) saved = "en";
-  sel.value = saved;
-  apply(saved);
-  sel.addEventListener("change", () => apply(sel.value));
+  function setText(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = value == null ? "" : value;
+  }
+
+  function detect() {
+    var codes = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+    for (var i = 0; i < codes.length; i++) {
+      var code = String(codes[i] || "").toLowerCase();
+      if (code.indexOf("zh") === 0) return "zh";
+      if (code.indexOf("ja") === 0) return "ja";
+      if (code.indexOf("de") === 0) return "de";
+      if (code.indexOf("es") === 0) return "es";
+      if (code.indexOf("fr") === 0) return "fr";
+      if (code.indexOf("en") === 0) return "en";
+    }
+    return "en";
+  }
+
+  function stripLead(value) {
+    var text = String(value == null ? "" : value);
+    var match = text.match(/^([^:：]{1,70})[:：]\s*/);
+    if (match && /(free|gratis|kostenlos|gratuit|無料|免费|免費|premium|pro\b|payant|kostenpflichtig|プレミアム|有料|高级|高級|付费|付費|licen|lizenz|licencia|licence|授权|授權|ライセンス)/i.test(match[1])) {
+      return text.slice(match[0].length);
+    }
+    return text;
+  }
+
+  function sentence(value) {
+    var text = String(value == null ? "" : value);
+    return /^[a-z]/.test(text) ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+  }
+
+  function cleanNote(value) {
+    var text = String(value == null ? "" : value).trim();
+    if (/^(HOW IT WORKS|SO FUNKTIONIERT ES|CÓMO FUNCIONA|COMMENT ÇA MARCHE|使用方法|使い方)$/i.test(text)) return "";
+    return text;
+  }
+
+  var iconCheck = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  var iconLocal = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg>';
+  var iconEye = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 9 4.5 9 7a11.7 11.7 0 0 1-2.3 3.6"/><path d="M6.2 6.2C4.2 7.7 3 9.7 3 12c0 2.5 4 7 9 7a11 11 0 0 0 4.2-.8"/></svg>';
+  var iconGlobe = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>';
+  var iconCoffee = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z"/><path d="M16 10h2a3 3 0 0 1 0 6h-2"/><path d="M7 4v2M11 4v2"/></svg>';
+
+  function render(lang) {
+    var data = MODEL.langs[lang];
+    if (!data) return;
+    var u = data.ui;
+
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+
+    var parts = String(data.tagline || "").split("·").map(function (part) { return part.trim(); }).filter(Boolean);
+    var headline = parts.length ? parts.shift() : MODEL.name;
+
+    document.title = MODEL.name + " — " + headline;
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", data.intro.slice(0, 158));
+
+    setText("i-nav-features", u.navFeatures);
+    setText("i-nav-plans", u.navPlans);
+    setText("i-nav-privacy", u.navPrivacy);
+    setText("i-nav-support", u.navSupport);
+    setText("i-eyebrow", u.eyebrow);
+    setText("i-h1", headline);
+    setText("i-intro", data.intro);
+    setText("i-get-label", u.ctaGet);
+    setText("i-privacy-label", u.ctaPrivacy);
+    setText("i-source-label", u.ctaSource);
+    setText("i-micro", u.badgeFree + " · " + u.badgeBrowsers);
+
+    var tagline = document.getElementById("i-tagline");
+    if (tagline) {
+      tagline.innerHTML = parts.map(function (part) { return "<span>" + esc(part) + "</span>"; }).join("");
+    }
+
+    var badges = document.getElementById("i-badges");
+    if (badges) {
+      badges.innerHTML = [
+        [iconLocal, u.badgeLocal],
+        [iconEye, u.badgeNoTrack],
+        [iconGlobe, u.badgeBrowsers]
+      ].map(function (item) {
+        return '<span class="badge">' + item[0] + esc(item[1]) + "</span>";
+      }).join("");
+    }
+
+    setText("i-app-name", MODEL.name);
+    setText("i-app-sub", u.badgeFree);
+    setText("i-app-browsers", u.badgeBrowsers);
+    var appPoints = document.getElementById("i-app-points");
+    if (appPoints) {
+      appPoints.innerHTML = u.privacyPoints.map(function (point) {
+        return "<div>" + iconCheck + "<span>" + esc(point) + "</span></div>";
+      }).join("");
+    }
+
+    setText("i-feat-title", u.featuresTitle);
+    setText("i-feat-lead", u.featuresLead);
+    setText("i-more-title", u.moreTitle);
+
+    var primary = data.why.slice(0, 6);
+    var extra = data.why.slice(6);
+    var featureGrid = document.getElementById("i-features");
+    if (featureGrid) {
+      featureGrid.innerHTML = primary.map(function (text, index) {
+        return '<article class="feature"><span class="num">' + String(index + 1).padStart(2, "0") + "</span><p>" + esc(text) + "</p></article>";
+      }).join("");
+    }
+
+    var morePanel = document.getElementById("i-more-panel");
+    var moreList = document.getElementById("i-more");
+    if (morePanel && moreList) {
+      if (extra.length) {
+        morePanel.hidden = false;
+        moreList.innerHTML = extra.map(function (text) { return "<li>" + esc(text) + "</li>"; }).join("");
+      } else {
+        morePanel.hidden = true;
+      }
+    }
+
+    setText("i-plan-title", u.planTitle);
+    setText("i-plan-lead", u.planLead);
+    var plans = document.getElementById("i-plans");
+    if (plans) {
+      plans.innerHTML =
+        '<article class="plan"><div class="plan-top"><span class="plan-mark free">' + iconCheck + "</span><h3>" + esc(u.freeLabel) + "</h3></div><p>" + esc(sentence(stripLead(data.plan.free))) + "</p></article>" +
+        '<article class="plan premium"><div class="plan-top"><span class="plan-mark premium">' + iconCheck + "</span><h3>" + esc(u.premiumLabel) + "</h3></div><p>" + esc(sentence(stripLead(data.plan.premium))) + "</p></article>";
+    }
+
+    var note = cleanNote(data.plan.note);
+    var planNote = document.getElementById("i-plan-note");
+    if (planNote) {
+      planNote.hidden = !note;
+      planNote.textContent = note;
+    }
+
+    setText("i-priv-title", u.privacyTitle);
+    setText("i-priv-lead", u.privacyLead);
+    setText("i-priv-cta", u.privacyCta);
+    var points = document.getElementById("i-priv-points");
+    if (points) {
+      points.innerHTML = u.privacyPoints.map(function (point) {
+        return '<span class="point">' + iconCheck + esc(point) + "</span>";
+      }).join("");
+    }
+
+    setText("i-support-eyebrow", u.supportEyebrow);
+    setText("i-support-title", data.thankTitle);
+    var copy = document.getElementById("i-support-copy");
+    if (copy) {
+      copy.innerHTML = data.thank.map(function (paragraph) { return "<p>" + paragraph + "</p>"; }).join("");
+    }
+    var hint = document.getElementById("i-support-hint");
+    if (hint) {
+      hint.hidden = !data.ctaHint;
+      hint.textContent = data.ctaHint || "";
+    }
+    setText("i-support-btn-label", data.btnText || "Buy Me a Coffee");
+    var disclaimer = document.getElementById("i-support-disclaimer");
+    if (disclaimer) {
+      disclaimer.hidden = !data.disclaimer;
+      disclaimer.textContent = data.disclaimer || "";
+    }
+
+    setText("i-footer-more", u.footerMore);
+    setText("i-footer-privacy", u.footerPrivacy);
+    setText("i-footer-github", u.footerGithub);
+    setText("i-footer-site", u.footerSite);
+    setText("i-footer-copy", "© 2026 " + MODEL.name);
+  }
+
+  function storedLang() {
+    try { return localStorage.getItem(LANG_KEY); } catch (error) { return null; }
+  }
+
+  function remember(lang) {
+    try { localStorage.setItem(LANG_KEY, lang); } catch (error) { /* storage can be blocked */ }
+  }
+
+  if (select) {
+    var saved = storedLang();
+    var initial = saved && MODEL.langs[saved] ? saved : detect();
+    if (!MODEL.langs[initial]) initial = "en";
+    select.value = initial;
+    if (initial !== "en") render(initial);
+    select.addEventListener("change", function () {
+      remember(select.value);
+      render(select.value);
+    });
+  }
 })();
+
 </script>
 </body>
 </html>

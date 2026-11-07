@@ -4,7 +4,7 @@ English | [中文](languages/README_zh.md) | [Español](languages/README_es.md) 
 
 See the real profit of an Amazon product without opening a spreadsheet.
 
-> Chrome · Manifest V3 · Minimal Permissions · No Account · 100% Local
+> Chrome & Edge · Manifest V3 · Minimal Permissions · No Account · 100% Local
 
 ---
 
@@ -13,8 +13,8 @@ See the real profit of an Amazon product without opening a spreadsheet.
 This repository is **source code only**. It does **not** publish builds, ZIP files or releases, and no binary here is an official distribution.
 
 - Install VKT MarginMate from the official store listings only (links below), never from a third-party download site.
-- If you want to run the code yourself, load this folder as an unpacked extension in Chrome (see [Build](#build-from-source)).
-- Chrome is the only supported target. The manifest is Manifest V3 and there is no Firefox build in this repository.
+- If you want to run the code yourself, load this folder as an unpacked extension in Chrome or Edge (see [Build](#build-from-source)).
+- Chrome and Edge are the supported targets (Manifest V3, Chromium). There is no Firefox build in this repository.
 
 ---
 
@@ -29,7 +29,7 @@ VKT MarginMate puts the whole calculation next to the buybox on the product page
 | 🧮 **Live breakdown** | Referral fee, FBA fulfilment, storage, inbound placement, ads, returns and landed cost, itemised |
 | 🎯 **Break-even price** | The exact price where profit hits zero, so you know how low you can go |
 | 📈 **Target-price solver** | "What should I charge for 20% margin?" — answered for the current product |
-| 📋 **Search-page margins** | A profit badge on every result card, sortable by margin |
+| 📋 **Search-page margins** | Profit badges on result cards — every result with Pro — sortable by margin |
 | 🌍 **16 marketplaces** | Fee tables and VAT handling per storefront (US tiered FBA; UK/DE referral + VAT, manual FBA) |
 | ✏️ **Every number editable** | Unit cost, freight, duty, ad %, return %, FBA override — stored per ASIN |
 | 🔒 **Local by design** | No account, no server-side storage, no page content uploaded |
@@ -95,6 +95,7 @@ The US fulfilment table is complete. Other storefronts ship referral rates and V
 | Store | Status |
 |---|---|
 | Chrome Web Store | *submission pending — link will be added here* |
+| Microsoft Edge Add-ons | *submission pending — link will be added here* |
 
 > Install only from the official listing above. This repository does not distribute installable builds.
 
@@ -108,7 +109,7 @@ npm run export-fees   # data/fees.js → data/fees.json (for the static host)
 npm run build         # publish/marginmate-v<version>.zip — local use only
 ```
 
-For development, open `chrome://extensions`, enable Developer mode and load this repository folder as an unpacked extension. Build output in `publish/` is for local testing and is not a release.
+For development, open `chrome://extensions` or `edge://extensions`, enable Developer mode and load this repository folder as an unpacked extension. Build output in `publish/` is for local testing and is not a release.
 
 ---
 
@@ -132,7 +133,7 @@ For development, open `chrome://extensions`, enable Developer mode and load this
 
 - **No account, no analytics, no tracking.** Cost inputs and saved products stay in `chrome.storage.local`.
 - Network access is limited to a daily fee-table refresh and, only if you activate Pro, a licence check.
-- Permissions: `storage`, `alarms`, and host access to the 16 Amazon storefronts. Nothing else.
+- Permissions: `storage`, `alarms`, host access to the 16 Amazon storefronts, and HTTPS access to `annmax1983.com` (fee-table refresh, licence checkout) and `api.annmax1983.com` (licence validation). Nothing else.
 
 ---
 

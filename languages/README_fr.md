@@ -4,7 +4,7 @@
 
 Voir la marge réelle d'un produit Amazon sans ouvrir de tableur.
 
-> Chrome · Manifest V3 · Permissions minimales · Sans compte · 100 % local
+> Chrome et Edge · Manifest V3 · Permissions minimales · Sans compte · 100 % local
 
 ---
 
@@ -13,8 +13,8 @@ Voir la marge réelle d'un produit Amazon sans ouvrir de tableur.
 Ce dépôt contient **uniquement le code source**. Il ne publie **aucun** build, ZIP ou release, et aucun binaire présent ici n'est une distribution officielle.
 
 - Installez VKT MarginMate uniquement depuis la fiche officielle du store (lien plus bas), jamais depuis un site de téléchargement tiers.
-- Pour exécuter le code vous-même, chargez ce dossier comme extension non empaquetée dans Chrome.
-- Seul Chrome est pris en charge. Le manifeste est en Manifest V3 et aucune version Firefox n'est fournie ici.
+- Pour exécuter le code vous-même, chargez ce dossier comme extension non empaquetée dans Chrome ou Edge.
+- Chrome et Edge sont pris en charge (Manifest V3, Chromium). Aucune version Firefox n'est fournie ici.
 
 ---
 
@@ -29,7 +29,7 @@ VKT MarginMate place tout le calcul à côté du bloc d'achat de la fiche déjà
 | 🧮 **Détail en direct** | Commission, expédition FBA, stockage, placement, publicité, retours et coût rendu, ligne par ligne |
 | 🎯 **Prix d'équilibre** | Le prix exact où le bénéfice tombe à zéro |
 | 📈 **Prix cible** | « Combien facturer pour 20 % de marge ? » répondu pour ce produit |
-| 📋 **Marges en recherche** | Un badge de bénéfice sur chaque résultat, triable par marge |
+| 📋 **Marges en recherche** | Un badge de bénéfice sur les résultats, tous avec Pro, triable par marge |
 | 🌍 **16 places de marché** | Barèmes et TVA par boutique (barème US par paliers ; UK/DE commission + TVA, FBA manuel) |
 | ✏️ **Tout est modifiable** | Coût, transport, douane, pub %, retours %, frais FBA manuel |
 | 🔒 **Local par conception** | Sans compte, sans stockage serveur, sans envoi de contenu |
@@ -95,6 +95,7 @@ Le barème d'expédition américain est complet. Les autres boutiques fournissen
 | Store | Statut |
 |---|---|
 | Chrome Web Store | *en cours de validation — lien à venir* |
+| Microsoft Edge Add-ons | *en cours de validation — lien à venir* |
 
 > Installez uniquement depuis la fiche officielle. Ce dépôt ne diffuse aucun build installable.
 
@@ -108,7 +109,7 @@ npm run export-fees   # data/fees.js → data/fees.json (pour l'hébergement sta
 npm run build         # publish/marginmate-v<version>.zip — usage local
 ```
 
-Pour développer, ouvrez `chrome://extensions`, activez le mode développeur et chargez ce dossier comme extension non empaquetée. Le contenu de `publish/` sert aux tests locaux, ce n'est pas une release.
+Pour développer, ouvrez `chrome://extensions` ou `edge://extensions`, activez le mode développeur et chargez ce dossier comme extension non empaquetée. Le contenu de `publish/` sert aux tests locaux, ce n'est pas une release.
 
 ---
 
@@ -116,7 +117,7 @@ Pour développer, ouvrez `chrome://extensions`, activez le mode développeur et 
 
 - **Sans compte, sans analytique, sans pistage.** Coûts et produits enregistrés restent dans `chrome.storage.local`.
 - Deux appels réseau seulement : la mise à jour quotidienne des barèmes et, avec Pro, la validation de licence.
-- Permissions : `storage`, `alarms` et l'accès aux 16 domaines Amazon.
+- Permissions : `storage`, `alarms`, l'accès aux 16 domaines Amazon et HTTPS vers `annmax1983.com` (mise à jour des barèmes, achat de licence) et `api.annmax1983.com` (validation de licence).
 
 ---
 

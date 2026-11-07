@@ -4,7 +4,7 @@
 
 Den echten Gewinn eines Amazon-Produkts sehen, ohne eine Tabelle zu öffnen.
 
-> Chrome · Manifest V3 · Minimale Berechtigungen · Kein Konto · 100 % lokal
+> Chrome & Edge · Manifest V3 · Minimale Berechtigungen · Kein Konto · 100 % lokal
 
 ---
 
@@ -13,8 +13,8 @@ Den echten Gewinn eines Amazon-Produkts sehen, ohne eine Tabelle zu öffnen.
 Dieses Repository enthält **nur den Quellcode**. Es veröffentlicht **keine** Builds, ZIP-Dateien oder Releases; kein Binary hier ist eine offizielle Distribution.
 
 - Installieren Sie VKT MarginMate ausschließlich über den offiziellen Store-Eintrag (Link unten), nie über Download-Portale Dritter.
-- Wer den Code selbst ausführen will, lädt diesen Ordner als entpackte Erweiterung in Chrome.
-- Unterstützt wird nur Chrome. Das Manifest ist Manifest V3, eine Firefox-Version gibt es hier nicht.
+- Wer den Code selbst ausführen will, lädt diesen Ordner als entpackte Erweiterung in Chrome oder Edge.
+- Unterstützt werden Chrome und Edge (Manifest V3, Chromium). Eine Firefox-Version gibt es hier nicht.
 
 ---
 
@@ -29,7 +29,7 @@ VKT MarginMate legt die gesamte Rechnung neben den Kaufkasten der Seite, die Sie
 | 🧮 **Live-Aufstellung** | Provision, FBA-Versand, Lager, Inbound Placement, Werbung, Retouren und Landed Cost, Zeile für Zeile |
 | 🎯 **Break-even-Preis** | Der Preis, bei dem der Gewinn null ist |
 | 📈 **Zielpreis** | „Was verlange ich für 20 % Marge?“ — direkt für dieses Produkt beantwortet |
-| 📋 **Margen in Suchergebnissen** | Gewinn-Badge auf jeder Ergebniskarte, sortierbar nach Marge |
+| 📋 **Margen in Suchergebnissen** | Gewinn-Badge auf Ergebniskarten, mit Pro auf allen Treffern, sortierbar nach Marge |
 | 🌍 **16 Marktplätze** | Gebührentabellen und VAT je Storefront (US gestaffelt, UK/DE Provision + VAT, FBA manuell) |
 | ✏️ **Alles editierbar** | Einkaufspreis, Fracht, Zoll, Werbe-%, Retouren-%, FBA-Gebühr manuell |
 | 🔒 **Lokal gedacht** | Kein Konto, kein Server-Speicher, keine Seiteninhalte hochgeladen |
@@ -95,6 +95,7 @@ Die US-Versandtabelle ist vollständig. Andere Marktplätze liefern Provision un
 | Store | Status |
 |---|---|
 | Chrome Web Store | *in Prüfung — Link folgt hier* |
+| Microsoft Edge Add-ons | *in Prüfung — Link folgt hier* |
 
 > Bitte nur über den offiziellen Eintrag installieren. Dieses Repository verteilt keine installierbaren Builds.
 
@@ -108,7 +109,7 @@ npm run export-fees   # data/fees.js → data/fees.json (für den statischen Hos
 npm run build         # publish/marginmate-v<version>.zip — nur lokal
 ```
 
-Zum Entwickeln `chrome://extensions` öffnen, Entwicklermodus aktivieren und diesen Ordner als entpackte Erweiterung laden. Was in `publish/` landet, ist für lokale Tests gedacht, kein Release.
+Zum Entwickeln `chrome://extensions` oder `edge://extensions` öffnen, Entwicklermodus aktivieren und diesen Ordner als entpackte Erweiterung laden. Was in `publish/` landet, ist für lokale Tests gedacht, kein Release.
 
 ---
 
@@ -116,7 +117,7 @@ Zum Entwickeln `chrome://extensions` öffnen, Entwicklermodus aktivieren und die
 
 - **Kein Konto, keine Analyse, kein Tracking.** Kosten und gespeicherte Produkte bleiben in `chrome.storage.local`.
 - Netzwerkzugriffe: tägliche Tabellenaktualisierung und, nur bei Pro, eine Lizenzprüfung.
-- Berechtigungen: `storage`, `alarms` und Zugriff auf die 16 Amazon-Domains.
+- Berechtigungen: `storage`, `alarms`, Zugriff auf die 16 Amazon-Domains sowie HTTPS auf `annmax1983.com` (Tabellenaktualisierung, Lizenzkauf) und `api.annmax1983.com` (Lizenzprüfung).
 
 ---
 
