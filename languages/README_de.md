@@ -8,16 +8,6 @@ Den echten Gewinn eines Amazon-Produkts sehen, ohne eine Tabelle zu öffnen.
 
 ---
 
-## ⚠️ Über dieses Repository
-
-Dieses Repository enthält **nur den Quellcode**. Es veröffentlicht **keine** Builds, ZIP-Dateien oder Releases; kein Binary hier ist eine offizielle Distribution.
-
-- Installieren Sie VKT MarginMate ausschließlich über den offiziellen Store-Eintrag (Link unten), nie über Download-Portale Dritter.
-- Wer den Code selbst ausführen will, lädt diesen Ordner als entpackte Erweiterung in Chrome oder Edge.
-- Unterstützt werden Chrome und Edge (Manifest V3, Chromium). Eine Firefox-Version gibt es hier nicht.
-
----
-
 ## Warum VKT MarginMate?
 
 Verkäufer rechnen noch immer von Hand: Preis kopieren, Provisionssatz erinnern, FBA-Gebühr der Größenklasse nachschlagen, Werbekosten schätzen und alles in Excel abziehen. Sätze unterscheiden sich je Marktplatz und Kategorie, und Amazons eigene Gebührenseiten liegen drei Klicks und ein PDF entfernt.
@@ -97,20 +87,6 @@ Die US-Versandtabelle ist vollständig. Andere Marktplätze liefern Provision un
 | Chrome Web Store | *in Prüfung — Link folgt hier* |
 | Microsoft Edge Add-ons | *in Prüfung — Link folgt hier* |
 
-> Bitte nur über den offiziellen Eintrag installieren. Dieses Repository verteilt keine installierbaren Builds.
-
----
-
-## Aus dem Quellcode bauen
-
-```bash
-npm install
-npm run export-fees   # data/fees.js → data/fees.json (für den statischen Host)
-npm run build         # publish/marginmate-v<version>.zip — nur lokal
-```
-
-Zum Entwickeln `chrome://extensions` oder `edge://extensions` öffnen, Entwicklermodus aktivieren und diesen Ordner als entpackte Erweiterung laden. Was in `publish/` landet, ist für lokale Tests gedacht, kein Release.
-
 ---
 
 ## Datenschutz
@@ -121,9 +97,19 @@ Zum Entwickeln `chrome://extensions` oder `edge://extensions` öffnen, Entwickle
 
 ---
 
+## Hinweis zum Quellcode
+
+> ⚠️ **Dieses Repository dient ausschließlich der Projektpräsentation — der vollständige Quellcode wird hier nicht veröffentlicht.** Es enthält nur die Nutzungsdokumentation, die Release-Notizen und Support-Informationen zur Erweiterung.
+
+> 📥 **Installation ausschließlich über die offiziellen Browser-Stores:** Chrome Web Store · Microsoft Edge Add-ons · Firefox-Add-ons (AMO). Von hier werden keine Offline-Installer verteilt.
+
+---
+
 ## Lizenz
 
-Copyright © 2026 VKT MarginMate. Alle Rechte vorbehalten. Der Quellcode wird zur Transparenz und Prüfung veröffentlicht; er ist kein Distributionskanal, und kein Build hier ist ein offizielles Release.
+Copyright © 2026 VKT MarginMate. Alle Rechte vorbehalten.
+
+Diese Software ist proprietär und quellgeschlossen. Ohne vorherige schriftliche Genehmigung des Autors ist das Dekompilieren, Reverse-Engineering, Knacken, Verändern, Neuverpacken, Weiterverbreiten oder Weiterverkaufen der Software (ganz oder teilweise) streng untersagt.
 
 ---
 

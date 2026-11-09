@@ -8,16 +8,6 @@ See the real profit of an Amazon product without opening a spreadsheet.
 
 ---
 
-## ⚠️ About this repository
-
-This repository is **source code only**. It does **not** publish builds, ZIP files or releases, and no binary here is an official distribution.
-
-- Install VKT MarginMate from the official store listings only (links below), never from a third-party download site.
-- If you want to run the code yourself, load this folder as an unpacked extension in Chrome or Edge (see [Build](#build-from-source)).
-- Chrome and Edge are the supported targets (Manifest V3, Chromium). There is no Firefox build in this repository.
-
----
-
 ## Why VKT MarginMate?
 
 Sellers still do this by hand: copy the price, remember the referral rate, look up the FBA fee for the size tier, guess at ad spend, then subtract everything in Excel. Rates change per marketplace and per category, and Amazon's own fee pages are three clicks and one PDF away.
@@ -97,36 +87,6 @@ The US fulfilment table is complete. Other storefronts ship referral rates and V
 | Chrome Web Store | *submission pending — link will be added here* |
 | Microsoft Edge Add-ons | *submission pending — link will be added here* |
 
-> Install only from the official listing above. This repository does not distribute installable builds.
-
----
-
-## Build from source
-
-```bash
-npm install
-npm run export-fees   # data/fees.js → data/fees.json (for the static host)
-npm run build         # publish/marginmate-v<version>.zip — local use only
-```
-
-For development, open `chrome://extensions` or `edge://extensions`, enable Developer mode and load this repository folder as an unpacked extension. Build output in `publish/` is for local testing and is not a release.
-
----
-
-## Files
-
-| Path | Purpose |
-|------|---------|
-| `manifest.json` | MV3 manifest, 16 Amazon storefronts |
-| `data/fees.js` | Fee tables — the only file to touch when rates change |
-| `selectors.js` / `extractor.js` | Product-page reads (price, ASIN, category, weight, dimensions) |
-| `calc.js` | Pure fee engine, no DOM and no `chrome.*` |
-| `content.js` / `content.css` | Injected product-page panel |
-| `batch.js` | Search-page badges, margin sort, CSV export |
-| `background.js` | Fee-table refresh, saved products, messaging |
-| `license.js` | Shared annmax licence client |
-| `index.html` / `promo.html` | Landing page and store tile (not shipped in the ZIP) |
-
 ---
 
 ## Privacy
@@ -137,9 +97,19 @@ For development, open `chrome://extensions` or `edge://extensions`, enable Devel
 
 ---
 
+## Source Code Notice
+
+> ⚠️ **This repository is for project showcase only — the full source code is not published here.** It contains the user documentation, release notes and support information for the extension.
+
+> 📥 **Download and install only from the official browser stores:** Chrome Web Store · Microsoft Edge Add-ons · Firefox Add-ons (AMO). No offline installation package is distributed from this repository.
+
+---
+
 ## License
 
-Copyright © 2026 VKT MarginMate. All rights reserved. The source is published for transparency and review; it is not a distribution channel, and no build in this repository is an official release.
+Copyright © 2026 VKT MarginMate. All rights reserved.
+
+This software is proprietary and closed-source. Without prior written authorization from the author, decompiling, reverse-engineering, cracking, modifying, repackaging, redistributing or reselling the program (in whole or in part) is strictly prohibited.
 
 ---
 

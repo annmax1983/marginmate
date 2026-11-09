@@ -8,16 +8,6 @@
 
 ---
 
-## ⚠️ 关于本仓库
-
-本仓库**只放源码**，**不发布构建产物**、不提供 ZIP、不发 Release，仓库里也没有任何官方安装包。
-
-- 安装请只走下面的官方商店链接，不要用第三方下载站。
-- 想自己跑代码：在 Chrome 或 Edge 里把本目录作为“已解压的扩展”加载（见[从源码构建](#从源码构建)）。
-- 支持 Chrome 与 Edge（Manifest V3，Chromium 内核），本仓库不包含 Firefox 版本。
-
----
-
 ## 为什么做这个
 
 卖家算利润的流程一直是手工的：抄下售价、查佣金比例、按尺寸分段查 FBA 配送费、估一个广告占比，再回 Excel 里减一遍。费率按站点和类目不同，亚马逊自己的费用页要点三次、还要翻 PDF。
@@ -97,36 +87,6 @@ FBA 费   = 按尺寸 + 发货重量查分段
 | Chrome 应用商店 | *审核中，链接后续补充* |
 | Microsoft Edge 加载项 | *审核中，链接后续补充* |
 
-> 只从上表官方渠道安装。本仓库不提供任何可安装的构建包。
-
----
-
-## 从源码构建
-
-```bash
-npm install
-npm run export-fees   # data/fees.js → data/fees.json（用于静态站托管）
-npm run build         # publish/marginmate-v<版本>.zip（仅本地自测）
-```
-
-开发时打开 `chrome://extensions`（Edge 为 `edge://extensions`），开启开发者模式，把本仓库根目录作为“已解压的扩展”加载。`publish/` 里的产物仅供本地测试，不是发布版本。
-
----
-
-## 文件说明
-
-| 路径 | 作用 |
-|------|------|
-| `manifest.json` | MV3 清单，16 个亚马逊站点 |
-| `data/fees.js` | 费率表，改费率只动这一个文件 |
-| `selectors.js` / `extractor.js` | 商品页读取（价格、ASIN、类目、重量、尺寸） |
-| `calc.js` | 纯计算内核，不碰 DOM 与 `chrome.*` |
-| `content.js` / `content.css` | 商品页面板 |
-| `batch.js` | 搜索页角标、排序、CSV 导出 |
-| `background.js` | 费率刷新、已保存商品、消息分发 |
-| `license.js` | 通用授权客户端 |
-| `index.html` / `promo.html` | 落地页与商店宣传图（不进 ZIP） |
-
 ---
 
 ## 隐私
@@ -137,9 +97,19 @@ npm run build         # publish/marginmate-v<版本>.zip（仅本地自测）
 
 ---
 
+## 源码说明
+
+> ⚠️ **本仓库仅用于项目展示，不发布完整源码。** 这里只有扩展的使用说明、更新日志与支持信息。
+
+> 📥 **请前往官方浏览器商店下载安装：** Chrome Web Store · Microsoft Edge Add-ons · Firefox 附加组件（AMO）。本仓库不提供离线安装包，也不向终端用户分发源码包。
+
+---
+
 ## 许可
 
-Copyright © 2026 VKT MarginMate，保留所有权利。公开源码用于透明与审阅，本仓库不作为分发渠道，其中任何构建产物都不是正式发布版。
+Copyright © 2026 VKT MarginMate，保留所有权利。
+
+本软件为闭源专有软件。未经作者书面授权，严禁反编译、逆向工程、破解、修改、重新打包、再分发或转售本软件（含全部或部分）。
 
 ---
 
